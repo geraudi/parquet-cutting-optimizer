@@ -178,8 +178,8 @@ export default function Page(): JSX.Element {
         <div className="flex flex-col rounded-md border mt-4 p-4">
           <p>Nombre de lames : {stripLengths.length}</p>
           <p>Longueur total : {totalLength.toString()}</p>
-          <p className={cn(stripsArea < roomArea && 'text-red-700 font-bold')}>Superficie du parquet : {stripsArea} {unit}²</p>
-          <p>Superficie de la pièce : {roomArea} {unit}²</p>
+          <p className={cn(stripsArea < roomArea ? 'text-red-700 font-bold' : 'text-green-700')}>Superficie du parquet : {stripsArea} {unit}²</p>
+          <p className="mt-2">Superficie de la pièce : {roomArea} {unit}²</p>
         </div>
       </div>
 

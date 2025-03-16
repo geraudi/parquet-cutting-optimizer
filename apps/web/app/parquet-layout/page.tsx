@@ -6,17 +6,6 @@ import { calculate } from "@web/lib/calculator";
 import RemainingStrips from "@web/components/remaining-strips";
 import { useStripStore } from "@web/store/strip-store";
 
-const roomSizes = [
-  {
-    x: 358, //359,
-    y: 195,
-  },
-  {
-    x: 261.5, // 262.5,
-    y: 117,
-  },
-];
-
 export default function Page(): JSX.Element {
   const roomSize = useStripStore(state => state.roomSize);
   const stripLengths = useStripStore(state => state.stripLengths);
