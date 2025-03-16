@@ -1,0 +1,180 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# Git Conventional Commit Message Format
+
+When generating a commit message:
+
+1. Start with one of these types:
+   - feat: A new feature
+   - fix: A bug fix
+   - docs: Documentation changes
+   - style: Code style changes
+   - refactor: Code refactoring
+   - perf: Performance improvements
+   - test: Adding/updating tests
+   - build: Build system changes
+   - ci: CI configuration changes
+   - chore: Other changes
+   - revert: Revert previous changes
+
+2. Add an optional scope in parentheses from:
+   - ui
+   - api
+   - core
+   - auth
+   - db
+   - config
+   - docs
+   - tests
+   - deps
+   - ci
+
+3. Format:
+   ```
+   type(scope): subject in lowercase
+   
+   [optional body with bullet points]
+   
+   [optional BREAKING CHANGE: description]
+   ```
+
+4. Rules:
+   - Type must be lowercase
+   - Subject must be lowercase
+   - No period at end of subject
+   - Max subject length: 72 characters
+   - Use imperative mood ("add" not "added")
+
+Examples:
+```
+feat(ui): add new button component
+fix(api): resolve authentication timeout
+docs: update installation guide
+style: format according to style guide
+refactor(core): simplify data processing
+perf(db): optimize query performance
+test(auth): add integration tests
+build: upgrade to typescript 5.0
+ci: add deployment workflow
+chore: clean up dependencies
+```
+
+## Configuration
+```json
+{
+  "name": "Git Conventional Commits",
+  "alwaysApply": true,
+  "commitMessageFormat": {
+    "pattern": "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\\([a-z0-9-]+\\))?: [a-z][a-zA-Z0-9 -_]*$",
+    "examples": [
+      "feat(ui): add new button component",
+      "fix(api): resolve user authentication issue",
+      "docs: update README with setup instructions",
+      "style(components): improve code formatting",
+      "refactor(core): simplify data processing logic",
+      "perf(queries): optimize database lookups",
+      "test(auth): add unit tests for login flow",
+      "build: update dependency versions",
+      "ci: configure GitHub Actions workflow",
+      "chore: update gitignore rules",
+      "revert: feat(ui) add new button component"
+    ]
+  },
+  "types": {
+    "feat": "A new feature",
+    "fix": "A bug fix",
+    "docs": "Documentation only changes",
+    "style": "Changes that do not affect the meaning of the code (white-space, formatting, etc)",
+    "refactor": "A code change that neither fixes a bug nor adds a feature",
+    "perf": "A code change that improves performance",
+    "test": "Adding missing tests or correcting existing tests",
+    "build": "Changes that affect the build system or external dependencies",
+    "ci": "Changes to our CI configuration files and scripts",
+    "chore": "Other changes that don't modify src or test files",
+    "revert": "Reverts a previous commit"
+  },
+  "scopeRules": {
+    "required": false,
+    "allowedScopes": [
+      "ui",
+      "api",
+      "core",
+      "auth",
+      "db",
+      "config",
+      "docs",
+      "tests",
+      "deps",
+      "ci"
+    ]
+  },
+  "subjectRules": {
+    "maxLength": 72,
+    "case": "lower",
+    "endWithPeriod": false
+  },
+  "bodyRules": {
+    "required": false,
+    "bulletPoints": true,
+    "maxLineLength": 100
+  },
+  "breakingChangeRules": {
+    "prefix": "BREAKING CHANGE:",
+    "required": false
+  }
+}
+```
+
+## Examples
+
+### Valid Commit Messages
+```
+feat(ui): add responsive navigation menu
+fix(api): resolve user authentication timeout
+docs: update installation guide
+style: format according to new style guide
+refactor(core): simplify data processing pipeline
+perf(db): optimize query performance
+test(auth): add integration tests
+build: upgrade to typescript 5.0
+ci: add automated deployment workflow
+chore: clean up unused dependencies
+revert: feat(ui) add new feature
+
+# With body and breaking change
+feat(api): implement new authentication system
+
+- Add OAuth2 support
+- Implement refresh token mechanism
+- Add rate limiting
+
+BREAKING CHANGE: The old authentication endpoints are removed
+```
+
+### Invalid Commit Messages
+```
+update stuff
+Fixed bug
+FEAT: Add Feature
+feat(UI): Added New Feature.
+```
+
+## Usage
+When committing changes, follow these steps:
+
+1. Choose the appropriate type from the list above
+2. Add a scope if relevant (in parentheses)
+3. Add a colon and space
+4. Write a concise description in lowercase
+5. Optionally add a body with bullet points
+6. If there are breaking changes, add the BREAKING CHANGE footer
+
+Example workflow:
+```bash
+git add .
+git commit -m "feat(auth): implement oauth2 authentication"
+``` 
