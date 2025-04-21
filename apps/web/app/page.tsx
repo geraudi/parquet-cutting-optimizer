@@ -64,69 +64,78 @@ export default function Page(): JSX.Element {
   const stripsArea = Big(totalLength).mul(stripWidth).toNumber();
 
   return (
-    <main className="flex flex-col items-start min-h-screen p-14">
+    <main className="flex flex-col items-center min-h-screen p-8 max-w-4xl mx-auto">
+      <div className="w-full mb-8 text-center">
+        <h1 className="text-3xl font-bold mb-2">Optimiseur de Découpe de Parquet</h1>
+        <p className="text-muted-foreground">Calculez la disposition optimale de vos lames de parquet pour minimiser les chutes</p>
+      </div>
 
-      <div className="p-4 border border-spacing bg-primary-foreground rounded-md w-full mb-4">
-        <h1 className="font-bold text-&xl mb-8">Configuration de la pièce</h1>
-
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-end">
-            <label htmlFor="room-width" className="mr-2 text-right w-72">Longueur (sens des lames de parquet) :</label>
-            <Input id="room-width" type="number" className="w-24" value={roomSize.width} onChange={(e) => setRoomWidth(Number(e.currentTarget.value))} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        <div className="p-6 border rounded-lg bg-card shadow-sm">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+            Configuration de la pièce
+          </h2>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <label htmlFor="room-width" className="text-sm font-medium min-w-[240px]">Longueur (sens des lames) en cm</label>
+              <Input id="room-width" type="number" className="w-40" value={roomSize.width} onChange={(e) => setRoomWidth(Number(e.currentTarget.value))} />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="room-height" className="text-sm font-medium min-w-[240px]">Largeur en cm</label>
+              <Input id="room-height" type="number" className="w-40" value={roomSize.height} onChange={(e) => setRoomHeight(Number(e.currentTarget.value))} />
+            </div>
           </div>
-          <div className="flex items-center justify-end">
-            <label htmlFor="room-height" className="mr-2 text-right w-80">Largeur :</label>
-            <Input id="room-height" type="number" className="w-24" value={roomSize.height} onChange={(e) => setRoomHeight(Number(e.currentTarget.value))} />
+        </div>
+
+        <div className="p-6 border rounded-lg bg-card shadow-sm">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            Configuration des lames
+          </h2>
+          <div className="flex items-center justify-between">
+            <label htmlFor="strips-width" className="text-sm font-medium min-w-[240px]">Largeur des lames en cm</label>
+            <Input id="strips-width" type="number" className="w-40" value={stripWidth} onChange={e => setStripWidth(Number(e.currentTarget.value))} />
           </div>
         </div>
       </div>
 
-      <div className="mb-4 p-4 border border-spacing rounded-md bg-primary-foreground w-full">
-        <h1 className="font-bold text-&xl mb-8">
-          Configuration des lames de parquet
-        </h1>
-
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-end">
-            <label htmlFor="room-width" className="mr-2 text-right w-72">Largeur des lames de parquet :</label>
-            <Input id="strips-width" type="number" className="w-24" value={stripWidth} onChange={e => setStripWidth(Number(e.currentTarget.value))} />
+      <div className="w-full mt-6 p-6 border rounded-lg bg-card shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Ajouter des lames de parquet
+        </h2>
+        <div className="flex flex-col sm:flex-row gap-4 items-end">
+          <div className="flex-1">
+            <label htmlFor="strips-length" className="text-sm font-medium block mb-2">Longueur de la lame</label>
+            <Input
+              id="strips-length"
+              className="w-full"
+              ref={inputLengthRef}
+              type="number"
+              onKeyDown={onKeyDown}
+              placeholder="Longueur en cm"
+            />
           </div>
-        </div>
-      </div>
-
-      <h2 className="font-bold text-1xl mt-8 mb-4">
-        Ajouter les lames de parquet
-      </h2>
-
-      <div className="flex gap-4 p-4 border border-spacing-4 border-zinc-200 rounded-md bg-primary-foreground">
-        <div className="flex items-center gap-4">
-          <label htmlFor="strips-length" className="w-auto whitespace-nowrap">
-            Longueur de la lame à ajouter
-          </label>
-          <Input
-            id="strips-length"
-            className="w-24"
-            ref={inputLengthRef}
-            type="number"
-            onKeyDown={onKeyDown}
-          />
-        </div>
-
-        <div className="flex items-center gap-4">
-          <label htmlFor="strips-count" className="w-auto whitespace-nowrap">
-            Nombre
-          </label>
-          <Input
-            id="strips-count"
-            className="w-24"
-            type="number"
-            ref={inputCountRef}
-          />
-        </div>
-        <div className="">
+          <div className="flex-1">
+            <label htmlFor="strips-count" className="text-sm font-medium block mb-2">Nombre de lames</label>
+            <Input
+              id="strips-count"
+              className="w-full"
+              type="number"
+              ref={inputCountRef}
+              placeholder="Quantité"
+            />
+          </div>
           <Button
-            size="icon"
-            className="bg-lime-600 hover:bg-lime-700 h-9 w-9"
+            size="lg"
+            className="bg-primary hover:bg-primary/90 h-10"
             onClick={() => {
               if (inputLengthRef.current?.value) {
                 addStrip(
@@ -138,57 +147,82 @@ export default function Page(): JSX.Element {
               }
             }}
           >
-            <SquarePlus />
+            <SquarePlus className="mr-2" />
+            Ajouter
           </Button>
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <ScrollArea className="h-72 w-auto rounded-md border mt-4 bg-primary-foreground">
-          {Object.entries(groupedStripLength)
-            .sort(
-              (entriesA, entriesB) => Number(entriesA[0]) - Number(entriesB[0]),
-            )
-            .map((groupedStripLengthItem) => (
-              <div key={groupedStripLengthItem[0]} className="flex m-2">
-                <Button
-                  variant="ghost"
-                  className="h-6 w-6 p-1 mr-0"
-                  onClick={() => {
-                    removeStrip(Number(groupedStripLengthItem[0]));
-                  }}
-                >
-                  <SquareMinus size={12} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="h-6 w-6 p-1 mr-0"
-                  onClick={() => {
-                    addStrip(Number(groupedStripLengthItem[0]));
-                  }}
-                >
-                  <SquarePlus size={12} />
-                </Button>
-                <div className="ml-4">
-                  {groupedStripLengthItem[1]} X {groupedStripLengthItem[0]} {unit}
+      <div className="w-full mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-6 border rounded-lg bg-card shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Lames ajoutées</h2>
+          <ScrollArea className="h-72">
+            {Object.entries(groupedStripLength)
+              .sort((entriesA, entriesB) => Number(entriesA[0]) - Number(entriesB[0]))
+              .map((groupedStripLengthItem) => (
+                <div key={groupedStripLengthItem[0]} className="flex items-center gap-2 p-2 hover:bg-muted rounded-md">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => removeStrip(Number(groupedStripLengthItem[0]))}
+                  >
+                    <SquareMinus size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => addStrip(Number(groupedStripLengthItem[0]))}
+                  >
+                    <SquarePlus size={16} />
+                  </Button>
+                  <span className="flex-1">
+                    {groupedStripLengthItem[1]} × {groupedStripLengthItem[0]} {unit}
+                  </span>
                 </div>
-              </div>
-            ))}
-        </ScrollArea>
-        <div className="flex flex-col rounded-md border mt-4 p-4">
-          <p>Nombre de lames : {stripLengths.length}</p>
-          <p>Longueur total : {totalLength.toString()}</p>
-          <p className={cn(stripsArea < roomArea ? 'text-red-700 font-bold' : 'text-green-700')}>Superficie du parquet : {stripsArea} {unit}²</p>
-          <p className="mt-2">Superficie de la pièce : {roomArea} {unit}²</p>
+              ))}
+          </ScrollArea>
+        </div>
+
+        <div className="p-6 border rounded-lg bg-card shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Résumé</h2>
+          <div className="space-y-4">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Nombre total de lames</span>
+              <span className="font-medium">{stripLengths.length}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Longueur totale</span>
+              <span className="font-medium">{Big(totalLength).div(100).toFixed(2)} m</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Superficie du parquet</span>
+              <span className={cn("font-medium", stripsArea < roomArea ? "text-destructive" : "text-green-600")}>
+                {Big(stripsArea).div(10000).toFixed(2)} m²
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Superficie de la pièce</span>
+              <span className="font-medium">{Big(roomArea).div(10000).toFixed(2)} m²</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <Button asChild className="m-4" disabled={stripsArea < roomArea}>
-        <Link title="Calculer" href="/parquet-layout">
-          Calculer
+      <Button
+        asChild
+        className="mt-8 w-full max-w-sm"
+        disabled={stripsArea < roomArea}
+        size="lg"
+      >
+        <Link href="/parquet-layout" className="flex items-center justify-center gap-2">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+          </svg>
+          Calculer la disposition
         </Link>
       </Button>
-
     </main>
   );
 }
