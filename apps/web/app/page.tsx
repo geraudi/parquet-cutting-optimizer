@@ -71,7 +71,7 @@ export default function Page(): JSX.Element {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        <div className="p-6 border rounded-lg bg-card shadow-sm">
+        <div className="p-6 border rounded-lg dark:bg-gray-800 bg-card shadow-sm">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -81,16 +81,16 @@ export default function Page(): JSX.Element {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <label htmlFor="room-width" className="text-sm font-medium min-w-[240px]">Longueur (sens des lames) en cm</label>
-              <Input id="room-width" type="number" className="w-40" value={roomSize.width} onChange={(e) => setRoomWidth(Number(e.currentTarget.value))} />
+              <Input id="room-width" type="number" className="w-40 dark:bg-gray-600" value={roomSize.width} onChange={(e) => setRoomWidth(Number(e.currentTarget.value))} />
             </div>
             <div className="flex items-center justify-between">
               <label htmlFor="room-height" className="text-sm font-medium min-w-[240px]">Largeur en cm</label>
-              <Input id="room-height" type="number" className="w-40" value={roomSize.height} onChange={(e) => setRoomHeight(Number(e.currentTarget.value))} />
+              <Input id="room-height" type="number" className="w-40 dark:bg-gray-600" value={roomSize.height} onChange={(e) => setRoomHeight(Number(e.currentTarget.value))} />
             </div>
           </div>
         </div>
 
-        <div className="p-6 border rounded-lg bg-card shadow-sm">
+        <div className="p-6 border rounded-lg bg-card dark:bg-gray-800 shadow-sm">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -99,12 +99,12 @@ export default function Page(): JSX.Element {
           </h2>
           <div className="flex items-center justify-between">
             <label htmlFor="strips-width" className="text-sm font-medium min-w-[240px]">Largeur des lames en cm</label>
-            <Input id="strips-width" type="number" className="w-40" value={stripWidth} onChange={e => setStripWidth(Number(e.currentTarget.value))} />
+            <Input id="strips-width" type="number" className="w-40 dark:bg-gray-600" value={stripWidth} onChange={e => setStripWidth(Number(e.currentTarget.value))} />
           </div>
         </div>
       </div>
 
-      <div className="w-full mt-6 p-6 border rounded-lg bg-card shadow-sm">
+      <div className="w-full mt-6 p-6 border rounded-lg bg-card dark:bg-gray-800 shadow-sm">
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -116,7 +116,7 @@ export default function Page(): JSX.Element {
             <label htmlFor="strips-length" className="text-sm font-medium block mb-2">Longueur de la lame</label>
             <Input
               id="strips-length"
-              className="w-full"
+              className="w-full dark:bg-gray-600"
               ref={inputLengthRef}
               type="number"
               onKeyDown={onKeyDown}
@@ -127,7 +127,7 @@ export default function Page(): JSX.Element {
             <label htmlFor="strips-count" className="text-sm font-medium block mb-2">Nombre de lames</label>
             <Input
               id="strips-count"
-              className="w-full"
+              className="w-full dark:bg-gray-600"
               type="number"
               ref={inputCountRef}
               placeholder="Quantité"
@@ -154,7 +154,7 @@ export default function Page(): JSX.Element {
       </div>
 
       <div className="w-full mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border rounded-lg bg-card shadow-sm">
+        <div className="p-6 border rounded-lg bg-card dark:bg-gray-800 shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Lames ajoutées</h2>
           <ScrollArea className="h-72">
             {Object.entries(groupedStripLength)
@@ -185,7 +185,7 @@ export default function Page(): JSX.Element {
           </ScrollArea>
         </div>
 
-        <div className="p-6 border rounded-lg bg-card shadow-sm">
+        <div className="p-6 border rounded-lg dark:bg-gray-800 bg-card shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Résumé</h2>
           <div className="space-y-4">
             <div className="flex justify-between">
