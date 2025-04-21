@@ -12,7 +12,7 @@ const StripComponent = forwardRef<HTMLDivElement, StripProps>(
     { strip, isOpacityEnabled, isDragging, style, ...props }: StripProps,
     ref,
   ) => {
-    const ratio = 3.5;
+    const ratio = 3;
     const styles: CSSProperties = {
       opacity: isOpacityEnabled ? "0.5" : "1",
       cursor: isDragging ? "grabbing" : "grab",
