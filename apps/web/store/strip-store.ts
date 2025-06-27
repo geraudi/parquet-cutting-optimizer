@@ -13,6 +13,7 @@ interface StripState {
   setRoomWidth: (width: number) => void;
   setRoomHeight: (height: number) => void;
   setStripWidth: (stripWidth: number) => void;
+  removeAll: (length: number) => void;
 }
 
 const useStripStore = create<StripState>()(
@@ -61,6 +62,11 @@ const useStripStore = create<StripState>()(
             }
 
             return state;
+          });
+        },
+        removeAll: (length) => {
+          set((state) => {
+            return { stripLengths: state.stripLengths.filter(l => l !== length) };
           });
         },
       })),

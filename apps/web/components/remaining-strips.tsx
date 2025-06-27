@@ -3,8 +3,9 @@ import {
   type RoomSize as IRoomSize,
   type Strip as IStrip,
 } from "../lib/calculator";
-import { stripsInput } from "../strips-input";
+import { useStripStore } from "@web/store/strip-store";
 import Strip from "./strip";
+import Big from "big.js";
 
 interface RemainingStripsProps {
   strips: IStrip[];
@@ -15,24 +16,17 @@ export default function RemainingStrips({
   strips,
   roomSizes,
 }: RemainingStripsProps): JSX.Element {
-  const stripeCount = stripsInput.length;
-  const area =
-    (stripsInput.reduce((acc, strip) => acc + strip, 0) * 13) / 10000;
+  const stripLengths = useStripStore(state => state.stripLengths);
+  const stripeCount = stripLengths.length;
+  const totalLength = stripLengths.reduce((sum, length) => Big(sum).plus(length).toNumber(), 0);
+  const area = Big(totalLength).mul(13).div(10000).toNumber();
 
-  let roomsArea = 0;
-  roomSizes.forEach((roomSize) => {
-    roomsArea += roomSize.x * roomSize.y;
-  });
+  const roomsArea = roomSizes.reduce((acc, roomSize) => {
+    return Big(acc).plus(Big(roomSize.width).mul(roomSize.height)).toNumber();
+  }, 0);
 
   return (
     <>
-      <div className="text-gray-800 text-xl font-bold mt-8 mb-3">
-        Lames restantes
-      </div>
-      <div>Nombre de lames de parquet : {stripeCount}</div>
-      <div>Superficie du parquet : {area} m2</div>
-      <div>Superficie des pièces : {roomsArea / 10000} m2</div>
-
       <div>
         Longueur restante :{" "}
         {Math.round(

@@ -92,7 +92,7 @@ export default function Row({ row }: RowProps): JSX.Element {
   return (
     <div style={styles} ref={setNodeRef} className="flex items-center">
       <div
-        className="w-8"
+        className="w-8 print:hidden"
         ref={setActivatorNodeRef}
         {...attributes}
         {...listeners}

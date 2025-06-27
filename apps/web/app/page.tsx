@@ -2,7 +2,7 @@
 
 import type { JSX, KeyboardEvent } from "react";
 import { useRef } from "react";
-import { SquareMinus, SquarePlus } from "lucide-react";
+import { SquareMinus, SquarePlus, Trash2 } from "lucide-react";
 import { Input } from "@workspace/ui/components/input";
 import { useStripStore } from "@web/store/strip-store";
 import { Button } from "@workspace/ui/components/button"
@@ -25,6 +25,7 @@ export default function Page(): JSX.Element {
   const stripLengths = useStripStore(state => state.stripLengths);
   const addStrip = useStripStore(state => state.add);
   const removeStrip = useStripStore(state => state.remove);
+  const removeAllStrips = useStripStore(state => state.removeAll);
 
   const stripWidth = useStripStore(state => state.stripWidth);
   const setStripWidth = useStripStore(state => state.setStripWidth);
@@ -38,11 +39,15 @@ export default function Page(): JSX.Element {
 
   const onKeyDown = (event: KeyboardEvent): void => {
     if (event.key === "Enter") {
-      const value = (event.target as HTMLInputElement).value;
-
-      addStrip(Number(value));
-      if (inputLengthRef.current) {
-        inputLengthRef.current.value = "";
+      const lengthValue = inputLengthRef.current?.value;
+      const countValue = inputCountRef.current?.value;
+      if (lengthValue) {
+        addStrip(
+          Number(lengthValue),
+          countValue ? Number(countValue) : 1,
+        );
+        if (inputLengthRef.current) inputLengthRef.current.value = "";
+        if (inputCountRef.current) inputCountRef.current.value = "";
       }
       event.preventDefault();
     }
@@ -131,6 +136,7 @@ export default function Page(): JSX.Element {
               type="number"
               ref={inputCountRef}
               placeholder="Quantité"
+              onKeyDown={onKeyDown}
             />
           </div>
           <Button
@@ -176,6 +182,14 @@ export default function Page(): JSX.Element {
                     onClick={() => addStrip(Number(groupedStripLengthItem[0]))}
                   >
                     <SquarePlus size={16} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-destructive"
+                    onClick={() => removeAllStrips(Number(groupedStripLengthItem[0]))}
+                  >
+                    <Trash2 size={16} />
                   </Button>
                   <span className="flex-1">
                     {groupedStripLengthItem[1]} × {groupedStripLengthItem[0]} {unit}
