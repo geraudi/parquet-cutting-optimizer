@@ -23,9 +23,10 @@ import Row from "@web/components/row";
 
 interface RoomProps {
   room: IRoom;
+  onRowsChange?: (rows: IRow[]) => void;
 }
 
-export default function Room({ room }: RoomProps): JSX.Element {
+export default function Room({ room, onRowsChange }: RoomProps): JSX.Element {
   const id = useId();
   const [rows, setRows] = useState<IRow[]>(room.rows);
   const [activeRow, setActiveRow] = useState<IRow>();
@@ -58,7 +59,9 @@ export default function Room({ room }: RoomProps): JSX.Element {
     const overIndex = rows.findIndex((row) => row.id === over.id);
 
     if (activeIndex !== overIndex) {
-      setRows((prev) => arrayMove<IRow>(prev, activeIndex, overIndex));
+      const newRows = arrayMove<IRow>(rows, activeIndex, overIndex);
+      setRows(newRows);
+      if (onRowsChange) onRowsChange(newRows);
     }
   };
 
