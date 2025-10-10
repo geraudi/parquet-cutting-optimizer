@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { Providers } from "@web/components/providers"
+import { ToastContainer } from "@web/components/toast-container"
 import Link from "next/link"
 import Image from "next/image";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center justify-between">
           {children}
         </main>
+        <ToastContainer />
         </Providers>
       </body>
     </html>

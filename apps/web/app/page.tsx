@@ -10,6 +10,7 @@ import { ScrollArea } from "@workspace/ui/components/scroll-area";
 import Big from 'big.js';
 import { cn } from "@workspace/ui/lib/utils";
 import Link from "next/link";
+import { ImportExportControls } from "@web/components/import-export-controls";
 
 
 type GroupedStrips = Record<number, number>;
@@ -73,6 +74,16 @@ export default function Page(): JSX.Element {
       <div className="w-full mb-8 text-center">
         <h1 className="text-3xl font-bold mb-2">Optimiseur de Découpe de Parquet</h1>
         <p className="text-muted-foreground">Calculez la disposition optimale de vos lames de parquet pour minimiser les chutes</p>
+      </div>
+
+      <div className="w-full mb-6 p-6 border rounded-lg bg-card dark:bg-gray-800 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+          Sauvegarde et restauration
+        </h2>
+        <ImportExportControls />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
