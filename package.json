@@ -6,16 +6,17 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "update-pkg": "pnpm update --latest --filter \"*\""
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "prettier": "^3.6.2",
-    "turbo": "^2.5.6",
-    "typescript": "5.9.2"
+    "turbo": "^2.5.8",
+    "typescript": "5.9.3"
   },
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@10.18.2",
   "engines": {
     "node": ">=20"
   }
