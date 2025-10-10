@@ -68,7 +68,14 @@ interface ImportResult {
 - Location: `apps/web/components/import-export-controls.tsx`
 - Renders export button and file input for import
 - Handles user interactions and feedback
-- Integrates with existing UI design system
+- Integrates with existing UI design system using shadcn/ui components from `packages/ui`
+
+#### Toast Notification System
+- Uses Sonner toast library via shadcn/ui component
+- Location: `apps/web/components/toast-container.tsx` and `apps/web/lib/toast.ts`
+- Provides user feedback for import/export operations
+- Integrates with shadcn/ui theming and design system
+- Global toast management with auto-dismiss functionality
 
 #### FileValidation Utility
 - Location: `apps/web/lib/file-validation.ts`
@@ -173,7 +180,9 @@ The validation will check:
 - Clear visual feedback during operations
 - Descriptive error messages
 - Intuitive button placement
-- Consistent with existing UI patterns
+- Consistent with existing UI patterns using shadcn/ui components from `packages/ui`
+- Toast notifications for non-blocking feedback
+- Accessible design following shadcn/ui accessibility standards
 
 ### Future Extensibility
 - Version field for backward compatibility
