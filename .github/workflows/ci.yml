@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.18.2
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      # Code quality checks
+      - name: Run linting
+        run: pnpm lint
+        
+      - name: Run type checking
+        run: pnpm check-types
+        
+      # Testing
+      - name: Run tests
+        run: pnpm test
+        
+      # Build verification
+      - name: Build project
+        run: pnpm build
