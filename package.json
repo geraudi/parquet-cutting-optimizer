@@ -9,7 +9,9 @@
     "check-types": "turbo check-types",
     "test": "turbo test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "update-pkg": "pnpm update --latest --filter \"*\""
+    "update-pkg": "pnpm update --latest --filter \"*\"",
+    "ci:test": "./.github/scripts/test-workflow.sh --local-steps",
+    "ci:validate": "./.github/scripts/test-workflow.sh --validate"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",

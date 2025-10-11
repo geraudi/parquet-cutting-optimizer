@@ -1,4 +1,4 @@
-name: CI
+name: 🚀 Continuous Integration
 
 on:
   push:
@@ -8,36 +8,112 @@ on:
 
 jobs:
   ci:
+    name: 🔍 Code Quality & Testing
     runs-on: ubuntu-latest
     
+    env:
+      # Optimize turbo cache for CI (local caching only)
+      TURBO_CACHE_DIR: .turbo
+    
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
         
-      - name: Setup Node.js
+      - name: 🟢 Setup Node.js 20.x
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           
-      - name: Setup pnpm
+      - name: 📦 Setup pnpm package manager
         uses: pnpm/action-setup@v4
         with:
           version: 10.18.2
           
-      - name: Install dependencies
+      - name: 💾 Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+            
+      - name: 💾 Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+            
+      - name: 💾 Cache turbo build cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+          
+      - name: 📥 Install dependencies
         run: pnpm install --frozen-lockfile
         
-      # Code quality checks
-      - name: Run linting
-        run: pnpm lint
+      - name: 🔍 Run ESLint code analysis
+        run: |
+          echo "::group::Running ESLint checks"
+          pnpm lint || {
+            echo "::error::ESLint found code quality issues. Please fix the linting errors and try again."
+            echo "::notice::Run 'pnpm lint' locally to see detailed error messages."
+            exit 1
+          }
+          echo "::endgroup::"
         
-      - name: Run type checking
-        run: pnpm check-types
+      - name: 🔍 Run TypeScript type checking
+        run: |
+          echo "::group::Running TypeScript type checks"
+          pnpm check-types || {
+            echo "::error::TypeScript type checking failed. Please fix type errors and try again."
+            echo "::notice::Run 'pnpm check-types' locally to see detailed error messages."
+            exit 1
+          }
+          echo "::endgroup::"
         
-      # Testing
-      - name: Run tests
-        run: pnpm test
+      - name: 🧪 Run test suite
+        run: |
+          echo "::group::Running all tests"
+          pnpm test || {
+            echo "::error::Test suite failed. Please fix failing tests and try again."
+            echo "::notice::Run 'pnpm test' locally to see detailed test results."
+            exit 1
+          }
+          echo "::endgroup::"
         
-      # Build verification
-      - name: Build project
-        run: pnpm build
+      - name: 🏗️ Verify project builds
+        run: |
+          echo "::group::Building project"
+          pnpm build || {
+            echo "::error::Project build failed. Please fix build errors and try again."
+            echo "::notice::Run 'pnpm build' locally to see detailed build output."
+            exit 1
+          }
+          echo "::endgroup::"
+          
+      - name: ✅ CI Pipeline Complete
+        if: success()
+        run: |
+          echo "::notice::🎉 All checks passed! Your code is ready for review."
+          echo "::notice::✓ Linting passed"
+          echo "::notice::✓ Type checking passed" 
+          echo "::notice::✓ Tests passed"
+          echo "::notice::✓ Build successful"
+          
+      - name: ❌ CI Pipeline Failed
+        if: failure()
+        run: |
+          echo "::error::❌ CI Pipeline failed. Please check the logs above for details."
+          echo "::notice::💡 Quick troubleshooting tips:"
+          echo "::notice::  • Run the same commands locally to reproduce the issue"
+          echo "::notice::  • Check for any new dependencies or configuration changes"
+          echo "::notice::  • Ensure your local environment matches the CI environment"
+          echo "::notice::  • Review the specific step that failed for detailed error messages"
