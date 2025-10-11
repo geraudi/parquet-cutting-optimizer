@@ -120,6 +120,9 @@ importers:
 
   packages/eslint-config:
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.37.0
+        version: 9.37.0
       '@next/eslint-plugin-next':
         specifier: ^15.5.4
         version: 15.5.4
@@ -219,6 +222,9 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      eslint:
+        specifier: ^9.37.0
+        version: 9.37.0(jiti@2.6.1)
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.14
