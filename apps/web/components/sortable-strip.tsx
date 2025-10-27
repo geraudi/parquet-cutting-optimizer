@@ -1,12 +1,12 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { type JSX, type HTMLAttributes } from "react";
-import { type Strip as IStrip } from "../lib/calculator";
-import Strip from "./strip";
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import type { HTMLAttributes, JSX } from "react"
+import type { Strip as IStrip } from "../lib/calculator"
+import Strip from "./strip"
 
 type SortableStripProps = {
-  strip: IStrip;
-} & HTMLAttributes<HTMLDivElement>;
+  strip: IStrip
+} & HTMLAttributes<HTMLDivElement>
 
 function SortableStrip({ strip, ...props }: SortableStripProps): JSX.Element {
   const {
@@ -19,12 +19,12 @@ function SortableStrip({ strip, ...props }: SortableStripProps): JSX.Element {
   } = useSortable({
     id: strip.id,
     disabled: strip.isCut,
-  });
+  })
 
   const styles = {
     transform: CSS.Transform.toString(transform),
     transition: transition ?? undefined,
-  };
+  }
 
   return (
     <Strip
@@ -36,7 +36,7 @@ function SortableStrip({ strip, ...props }: SortableStripProps): JSX.Element {
       {...attributes}
       {...listeners}
     />
-  );
+  )
 }
 
-export default SortableStrip;
+export default SortableStrip

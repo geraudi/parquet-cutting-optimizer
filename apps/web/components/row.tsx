@@ -1,6 +1,5 @@
-"use client";
+"use client"
 
-import { type HTMLAttributes, type JSX, useId, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -11,28 +10,29 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
+} from "@dnd-kit/core"
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers"
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-} from "@dnd-kit/sortable";
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
-import { CSS } from "@dnd-kit/utilities";
-import { Menu } from "lucide-react";
-import { type Row as IRow, type Strip as IStrip } from "@web/lib/calculator";
-import Strip from "@web/components/strip";
-import SortableStrip from "@web/components/sortable-strip";
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import SortableStrip from "@web/components/sortable-strip"
+import Strip from "@web/components/strip"
+import type { Row as IRow, Strip as IStrip } from "@web/lib/calculator"
+import { Menu } from "lucide-react"
+import { type HTMLAttributes, type JSX, useId, useState } from "react"
 
 type RowProps = {
-  row: IRow;
-} & HTMLAttributes<HTMLDivElement>;
+  row: IRow
+} & HTMLAttributes<HTMLDivElement>
 
 export default function Row({ row }: RowProps): JSX.Element {
-  const id = useId();
-  const [strips, setStrips] = useState<IStrip[]>(row.strips);
-  const [activeStrip, setActiveStrip] = useState<IStrip>();
+  const id = useId()
+  const [strips, setStrips] = useState<IStrip[]>(row.strips)
+  const [activeStrip, setActiveStrip] = useState<IStrip>()
 
   const {
     attributes,
@@ -44,50 +44,50 @@ export default function Row({ row }: RowProps): JSX.Element {
     setActivatorNodeRef,
   } = useSortable({
     id: row.id,
-  });
+  })
 
   const styles = {
     transform: CSS.Transform.toString(transform),
     transition: transition ?? undefined,
     opacity: isDragging ? "0.5" : "1",
     cursor: isDragging ? "grabbing" : "grab",
-  };
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
+    })
+  )
 
   // triggered when dragging strip starts
   const handleDragStart = (event: DragStartEvent): void => {
-    const { active } = event;
-    setActiveStrip(strips.find((strip) => strip.id === active.id));
-  };
+    const { active } = event
+    setActiveStrip(strips.find((strip) => strip.id === active.id))
+  }
 
   const handleDragEnd = (event: DragEndEvent): void => {
-    const { active, over } = event;
-    if (!over) return;
+    const { active, over } = event
+    if (!over) return
 
-    const draggedStrip = strips.find((strip) => strip.id === active.id);
-    const overItem = strips.find((strip) => strip.id === over.id);
+    const draggedStrip = strips.find((strip) => strip.id === active.id)
+    const overItem = strips.find((strip) => strip.id === over.id)
 
     if (!draggedStrip || !overItem) {
-      return;
+      return
     }
 
-    const activeIndex = strips.findIndex((strip) => strip.id === active.id);
-    const overIndex = strips.findIndex((strip) => strip.id === over.id);
+    const activeIndex = strips.findIndex((strip) => strip.id === active.id)
+    const overIndex = strips.findIndex((strip) => strip.id === over.id)
 
     if (activeIndex !== overIndex) {
-      setStrips((prev) => arrayMove<IStrip>(prev, activeIndex, overIndex));
+      setStrips((prev) => arrayMove<IStrip>(prev, activeIndex, overIndex))
     }
-  };
+  }
 
   const handleDragCancel = (): void => {
-    setActiveStrip(undefined);
-  };
+    setActiveStrip(undefined)
+  }
 
   return (
     <div style={styles} ref={setNodeRef} className="flex items-center">
@@ -123,5 +123,5 @@ export default function Row({ row }: RowProps): JSX.Element {
         </div>
       </DndContext>
     </div>
-  );
+  )
 }

@@ -1,6 +1,5 @@
-"use client";
+"use client"
 
-import { type JSX, useId, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -11,63 +10,64 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
+} from "@dnd-kit/core"
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers"
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { type Room as IRoom, type Row as IRow } from "@web/lib/calculator";
-import Row from "@web/components/row";
+} from "@dnd-kit/sortable"
+import Row from "@web/components/row"
+import type { Room as IRoom, Row as IRow } from "@web/lib/calculator"
+import { type JSX, useId, useState } from "react"
 
 interface RoomProps {
-  room: IRoom;
-  onRowsChange?: (rows: IRow[]) => void;
+  room: IRoom
+  onRowsChange?: (rows: IRow[]) => void
 }
 
 export default function Room({ room, onRowsChange }: RoomProps): JSX.Element {
-  const id = useId();
-  const [rows, setRows] = useState<IRow[]>(room.rows);
-  const [activeRow, setActiveRow] = useState<IRow>();
+  const id = useId()
+  const [rows, setRows] = useState<IRow[]>(room.rows)
+  const [activeRow, setActiveRow] = useState<IRow>()
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
+    })
+  )
 
   // triggered when dragging row starts
   const handleDragStart = (event: DragStartEvent): void => {
-    const { active } = event;
-    setActiveRow(rows.find((row) => row.id === active.id));
-  };
+    const { active } = event
+    setActiveRow(rows.find((row) => row.id === active.id))
+  }
 
   const handleDragEnd = (event: DragEndEvent): void => {
-    const { active, over } = event;
-    if (!over) return;
+    const { active, over } = event
+    if (!over) return
 
-    const draggedRow = rows.find((row) => row.id === active.id);
-    const overItem = rows.find((row) => row.id === over.id);
+    const draggedRow = rows.find((row) => row.id === active.id)
+    const overItem = rows.find((row) => row.id === over.id)
 
     if (!draggedRow || !overItem) {
-      return;
+      return
     }
 
-    const activeIndex = rows.findIndex((row) => row.id === active.id);
-    const overIndex = rows.findIndex((row) => row.id === over.id);
+    const activeIndex = rows.findIndex((row) => row.id === active.id)
+    const overIndex = rows.findIndex((row) => row.id === over.id)
 
     if (activeIndex !== overIndex) {
-      const newRows = arrayMove<IRow>(rows, activeIndex, overIndex);
-      setRows(newRows);
-      if (onRowsChange) onRowsChange(newRows);
+      const newRows = arrayMove<IRow>(rows, activeIndex, overIndex)
+      setRows(newRows)
+      if (onRowsChange) onRowsChange(newRows)
     }
-  };
+  }
 
   const handleDragCancel = (): void => {
-    setActiveRow(undefined);
-  };
+    setActiveRow(undefined)
+  }
 
   return (
     <div className="">
@@ -92,5 +92,5 @@ export default function Room({ room, onRowsChange }: RoomProps): JSX.Element {
         </DndContext>
       </div>
     </div>
-  );
+  )
 }

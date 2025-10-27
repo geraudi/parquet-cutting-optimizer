@@ -1,8 +1,21 @@
 {
-    "editor.fontFamily": "Space Mono, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 12,
-    "terminal.integrated.fontSize": 11,
-    "window.zoomLevel": 1,
-    "typescript.preferences.includePackageJsonAutoImports": "off",
-    "typescript.reportStyleChecksAsWarnings": true
+  "editor.fontFamily": "Space Mono, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 12,
+  "terminal.integrated.fontSize": 11,
+  "window.zoomLevel": 1,
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.reportStyleChecksAsWarnings": true,
+
+  // Biome Configuration
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
+  },
+
+  // Disable conflicting extensions
+  "eslint.enable": false,
+  "prettier.enable": false
 }

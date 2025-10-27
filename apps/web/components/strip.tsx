@@ -1,18 +1,18 @@
-import { type CSSProperties, forwardRef, type HTMLAttributes } from "react";
-import { type Strip } from "../lib/calculator";
+import { type CSSProperties, forwardRef, type HTMLAttributes } from "react"
+import type { Strip } from "../lib/calculator"
 
 type StripProps = {
-  strip: Strip;
-  isOpacityEnabled?: boolean;
-  isDragging?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+  strip: Strip
+  isOpacityEnabled?: boolean
+  isDragging?: boolean
+} & HTMLAttributes<HTMLDivElement>
 
 const StripComponent = forwardRef<HTMLDivElement, StripProps>(
   (
     { strip, isOpacityEnabled, isDragging, style, ...props }: StripProps,
-    ref,
+    ref
   ) => {
-    const ratio = 3;
+    const ratio = 3
     const styles: CSSProperties = {
       opacity: isOpacityEnabled ? "0.5" : "1",
       cursor: isDragging ? "grabbing" : "grab",
@@ -26,7 +26,7 @@ const StripComponent = forwardRef<HTMLDivElement, StripProps>(
       border: "1px solid #444",
       backgroundColor: strip.isCut ? "#AAAAAA" : "#CCCCCC",
       ...style,
-    };
+    }
 
     return (
       <div style={styles} {...props} ref={!strip.isCut ? ref : undefined}>
@@ -35,10 +35,10 @@ const StripComponent = forwardRef<HTMLDivElement, StripProps>(
           ? `(${strip.originalWidth.toString()} / ${strip.rest.toString()})`
           : ""}
       </div>
-    );
-  },
-);
+    )
+  }
+)
 
-StripComponent.displayName = "Strip";
+StripComponent.displayName = "Strip"
 
-export default StripComponent;
+export default StripComponent

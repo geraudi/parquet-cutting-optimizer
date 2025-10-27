@@ -1,9 +1,10 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom"
+import { vi } from "vitest"
 
 // Mock DOM APIs that are not available in jsdom
-Object.defineProperty(window, 'URL', {
+Object.defineProperty(window, "URL", {
   value: {
-    createObjectURL: vi.fn(() => 'mock-url'),
+    createObjectURL: vi.fn(() => "mock-url"),
     revokeObjectURL: vi.fn(),
   },
 })
@@ -17,15 +18,15 @@ global.FileReader = class MockFileReader {
   readAsText(file: File) {
     // Simulate async file reading
     setTimeout(() => {
-      if (file.name.includes('error-file')) {
+      if (file.name.includes("error-file")) {
         this.onerror?.({ target: this })
       } else {
         try {
           // Extract content from the file constructor
-          const content = (file as any)._content || ''
+          const content = (file as any)._content || ""
           this.result = content
           this.onload?.({ target: { result: content } })
-        } catch (error) {
+        } catch (_error) {
           this.onerror?.({ target: this })
         }
       }
@@ -38,9 +39,13 @@ const OriginalFile = global.File
 global.File = class MockFile extends OriginalFile {
   _content: string
 
-  constructor(fileBits: BlobPart[], fileName: string, options?: FilePropertyBag) {
+  constructor(
+    fileBits: BlobPart[],
+    fileName: string,
+    options?: FilePropertyBag
+  ) {
     super(fileBits, fileName, options)
-    this._content = fileBits.join('')
+    this._content = fileBits.join("")
   }
 } as any
 
@@ -50,8 +55,8 @@ global.Blob = class MockBlob {
   type: string
 
   constructor(content: any[], options: { type?: string } = {}) {
-    this.content = content.join('')
-    this.type = options.type || ''
+    this.content = content.join("")
+    this.type = options.type || ""
   }
 
   async text() {

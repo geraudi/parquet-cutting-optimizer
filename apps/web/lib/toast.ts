@@ -2,12 +2,12 @@
  * Toast notification system using Sonner
  */
 
-import { toast } from "sonner";
+import { toast } from "sonner"
 
 export interface ToastOptions {
-  title: string;
-  message?: string;
-  duration?: number;
+  title: string
+  message?: string
+  duration?: number
 }
 
 /**
@@ -17,7 +17,7 @@ export function showSuccessToast(options: ToastOptions): string | number {
   return toast.success(options.title, {
     description: options.message,
     duration: options.duration ?? 5000,
-  });
+  })
 }
 
 /**
@@ -27,7 +27,7 @@ export function showErrorToast(options: ToastOptions): string | number {
   return toast.error(options.title, {
     description: options.message,
     duration: options.duration ?? 8000,
-  });
+  })
 }
 
 /**
@@ -37,7 +37,7 @@ export function showWarningToast(options: ToastOptions): string | number {
   return toast.warning(options.title, {
     description: options.message,
     duration: options.duration ?? 6000,
-  });
+  })
 }
 
 /**
@@ -47,19 +47,19 @@ export function showInfoToast(options: ToastOptions): string | number {
   return toast.info(options.title, {
     description: options.message,
     duration: options.duration ?? 5000,
-  });
+  })
 }
 
 /**
  * Dismiss a toast by ID
  */
 export function dismissToast(id: string | number) {
-  toast.dismiss(id);
+  toast.dismiss(id)
 }
 
 /**
  * Clear all toasts
  */
 export function clearAllToasts() {
-  toast.dismiss();
+  toast.dismiss()
 }

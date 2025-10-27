@@ -8,14 +8,31 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "biome.json",
+        "**/*.{js,jsx,ts,tsx,json,mjs,cjs}",
+        "!**/dist/**",
+        "!**/.next/**",
+        "!**/node_modules/**",
+        "!**/.turbo/**",
+        "!**/coverage/**"
+      ],
+      "outputs": []
     },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "**/*.test.{ts,tsx,js,jsx}", "**/*.spec.{ts,tsx,js,jsx}", "vitest.config.ts", "vitest.setup.ts"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "**/*.test.{ts,tsx,js,jsx}",
+        "**/*.spec.{ts,tsx,js,jsx}",
+        "vitest.config.ts",
+        "vitest.setup.ts"
+      ],
       "outputs": ["coverage/**", "test-results/**"]
     },
     "dev": {
