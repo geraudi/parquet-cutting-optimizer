@@ -1,6 +1,5 @@
 "use client";
 
-import { type JSX, useId, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -12,14 +11,15 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { type Room as IRoom, type Row as IRow } from "@web/lib/calculator";
 import Row from "@web/components/row";
+import type { Room as IRoom, Row as IRow } from "@web/lib/calculator";
+import { type JSX, useId, useState } from "react";
 
 interface RoomProps {
   room: IRoom;
@@ -35,7 +35,7 @@ export default function Room({ room, onRowsChange }: RoomProps): JSX.Element {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    })
   );
 
   // triggered when dragging row starts

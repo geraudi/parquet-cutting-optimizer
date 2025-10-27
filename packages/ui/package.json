@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
+    "lint": "biome check .",
+    "format": "biome format --write .",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -27,9 +28,7 @@
     "@types/node": "^24.9.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "eslint": "^9.37.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3"
   },

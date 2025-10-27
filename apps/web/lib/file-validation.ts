@@ -1,4 +1,4 @@
-import { RoomSize } from "./calculator";
+import type { RoomSize } from "./calculator";
 
 /**
  * Interface for the exportable store state
@@ -53,7 +53,7 @@ export function isValidRoomSize(value: unknown): value is RoomSize {
   if (!value || typeof value !== "object") {
     return false;
   }
-  
+
   const roomSize = value as Record<string, unknown>;
   return (
     typeof roomSize.width === "number" &&
@@ -87,19 +87,17 @@ export function isValidISODate(value: unknown): value is string {
   if (typeof value !== "string") {
     return false;
   }
-  
+
   const date = new Date(value);
-  return !isNaN(date.getTime()) && date.toISOString() === value;
+  return !Number.isNaN(date.getTime()) && date.toISOString() === value;
 }
 
 /**
  * Validates the structure and content of exportable store state
  */
-export function validateExportableStoreState(
-  data: unknown
-): ValidationError[] {
+export function validateExportableStoreState(data: unknown): ValidationError[] {
   const errors: ValidationError[] = [];
-  
+
   if (!data || typeof data !== "object") {
     errors.push({
       type: ValidationErrorType.INVALID_DATA_TYPE,
@@ -108,9 +106,9 @@ export function validateExportableStoreState(
     });
     return errors;
   }
-  
+
   const state = data as Record<string, unknown>;
-  
+
   // Validate roomSize
   if (!("roomSize" in state)) {
     errors.push({
@@ -121,12 +119,13 @@ export function validateExportableStoreState(
   } else if (!isValidRoomSize(state.roomSize)) {
     errors.push({
       type: ValidationErrorType.INVALID_DATA_TYPE,
-      message: "roomSize must be an object with numeric width and height properties",
+      message:
+        "roomSize must be an object with numeric width and height properties",
       field: "roomSize",
       value: state.roomSize,
     });
   }
-  
+
   // Validate stripWidth
   if (!("stripWidth" in state)) {
     errors.push({
@@ -142,7 +141,7 @@ export function validateExportableStoreState(
       value: state.stripWidth,
     });
   }
-  
+
   // Validate stripLengths
   if (!("stripLengths" in state)) {
     errors.push({
@@ -158,7 +157,7 @@ export function validateExportableStoreState(
       value: state.stripLengths,
     });
   }
-  
+
   // Validate totalLength
   if (!("totalLength" in state)) {
     errors.push({
@@ -174,7 +173,7 @@ export function validateExportableStoreState(
       value: state.totalLength,
     });
   }
-  
+
   // Validate version
   if (!("version" in state)) {
     errors.push({
@@ -185,12 +184,13 @@ export function validateExportableStoreState(
   } else if (!isValidVersion(state.version)) {
     errors.push({
       type: ValidationErrorType.VERSION_INCOMPATIBLE,
-      message: "version must be a valid semantic version string (e.g., '1.0.0')",
+      message:
+        "version must be a valid semantic version string (e.g., '1.0.0')",
       field: "version",
       value: state.version,
     });
   }
-  
+
   // Validate exportedAt
   if (!("exportedAt" in state)) {
     errors.push({
@@ -206,7 +206,7 @@ export function validateExportableStoreState(
       value: state.exportedAt,
     });
   }
-  
+
   return errors;
 }
 
@@ -215,7 +215,7 @@ export function validateExportableStoreState(
  */
 export function validateImportedJSON(jsonContent: string): ImportResult {
   let parsedData: unknown;
-  
+
   try {
     parsedData = JSON.parse(jsonContent);
   } catch (error) {
@@ -225,17 +225,19 @@ export function validateImportedJSON(jsonContent: string): ImportResult {
       if (message.includes("Unexpected end of JSON input")) {
         return {
           success: false,
-          error: "Invalid JSON format: file appears to be truncated or incomplete",
+          error:
+            "Invalid JSON format: file appears to be truncated or incomplete",
         };
       }
       if (message.includes("Unexpected token")) {
         return {
           success: false,
-          error: "Invalid JSON format: file contains invalid characters or syntax errors",
+          error:
+            "Invalid JSON format: file contains invalid characters or syntax errors",
         };
       }
     }
-    
+
     return {
       success: false,
       error: `Invalid JSON format: ${error instanceof Error ? error.message : "Unknown parsing error"}`,
@@ -244,19 +246,21 @@ export function validateImportedJSON(jsonContent: string): ImportResult {
 
   // Validate the parsed data structure
   const validationErrors = validateExportableStoreState(parsedData);
-  
+
   if (validationErrors.length > 0) {
     // Create detailed error message with specific field information
     const errorMessage = validationErrors
-      .map((error) => `${error.field ? `${error.field}: ` : ""}${error.message}`)
+      .map(
+        (error) => `${error.field ? `${error.field}: ` : ""}${error.message}`
+      )
       .join("; ");
-    
+
     return {
       success: false,
       error: `Validation failed: ${errorMessage}`,
     };
   }
-  
+
   return {
     success: true,
     data: parsedData as ExportableStoreState,
@@ -290,7 +294,7 @@ export async function validateImportFile(file: File): Promise<ImportResult> {
       error: "File must be a JSON file",
     };
   }
-  
+
   // Check file size (limit to 10MB)
   const maxSize = 10 * 1024 * 1024; // 10MB
   if (file.size > maxSize) {
@@ -307,10 +311,10 @@ export async function validateImportFile(file: File): Promise<ImportResult> {
       error: "File is empty",
     };
   }
-  
+
   try {
     const fileContent = await readFileAsText(file);
-    
+
     // Check for empty content after reading
     if (!fileContent || fileContent.trim().length === 0) {
       return {
@@ -318,7 +322,7 @@ export async function validateImportFile(file: File): Promise<ImportResult> {
         error: "File content is empty",
       };
     }
-    
+
     return validateImportedJSON(fileContent);
   } catch (error) {
     // Provide more specific error messages based on the error type
@@ -326,17 +330,19 @@ export async function validateImportFile(file: File): Promise<ImportResult> {
       if (error.name === "NotReadableError") {
         return {
           success: false,
-          error: "Failed to read file: file may be corrupted or in use by another application",
+          error:
+            "Failed to read file: file may be corrupted or in use by another application",
         };
       }
       if (error.name === "SecurityError") {
         return {
           success: false,
-          error: "Failed to read file: access denied due to security restrictions",
+          error:
+            "Failed to read file: access denied due to security restrictions",
         };
       }
     }
-    
+
     return {
       success: false,
       error: `Failed to read file: ${error instanceof Error ? error.message : "Unknown error"}`,
@@ -350,7 +356,7 @@ export async function validateImportFile(file: File): Promise<ImportResult> {
 function readFileAsText(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    
+
     reader.onload = (event) => {
       if (event.target?.result) {
         resolve(event.target.result as string);
@@ -358,11 +364,11 @@ function readFileAsText(file: File): Promise<string> {
         reject(new Error("Failed to read file content"));
       }
     };
-    
+
     reader.onerror = () => {
       reject(new Error("File reading failed"));
     };
-    
+
     reader.readAsText(file);
   });
 }
@@ -385,27 +391,32 @@ export function formatValidationError(error: string): FormattedError {
   if (error.includes("Failed to read file")) {
     return {
       title: "Erreur de lecture du fichier",
-      message: "Impossible de lire le fichier sélectionné. Le fichier pourrait être corrompu ou inaccessible.",
+      message:
+        "Impossible de lire le fichier sélectionné. Le fichier pourrait être corrompu ou inaccessible.",
       type: "error",
       suggestions: [
         "Vérifiez que le fichier n'est pas corrompu",
         "Essayez de sélectionner un autre fichier",
-        "Assurez-vous que le fichier n'est pas ouvert dans une autre application"
-      ]
+        "Assurez-vous que le fichier n'est pas ouvert dans une autre application",
+      ],
     };
   }
 
   // JSON parsing errors
-  if (error.includes("Invalid JSON format") || error.includes("Unexpected token")) {
+  if (
+    error.includes("Invalid JSON format") ||
+    error.includes("Unexpected token")
+  ) {
     return {
       title: "Format de fichier invalide",
-      message: "Le fichier sélectionné n'est pas un fichier JSON valide ou est corrompu.",
+      message:
+        "Le fichier sélectionné n'est pas un fichier JSON valide ou est corrompu.",
       type: "error",
       suggestions: [
         "Vérifiez que le fichier a été exporté correctement",
         "Assurez-vous que le fichier n'a pas été modifié manuellement",
-        "Essayez d'exporter une nouvelle configuration"
-      ]
+        "Essayez d'exporter une nouvelle configuration",
+      ],
     };
   }
 
@@ -413,12 +424,13 @@ export function formatValidationError(error: string): FormattedError {
   if (error.includes("File must be a JSON file")) {
     return {
       title: "Type de fichier incorrect",
-      message: "Seuls les fichiers JSON sont acceptés pour l'import de configuration.",
+      message:
+        "Seuls les fichiers JSON sont acceptés pour l'import de configuration.",
       type: "error",
       suggestions: [
         "Sélectionnez un fichier avec l'extension .json",
-        "Utilisez uniquement des fichiers exportés par cette application"
-      ]
+        "Utilisez uniquement des fichiers exportés par cette application",
+      ],
     };
   }
 
@@ -426,26 +438,31 @@ export function formatValidationError(error: string): FormattedError {
   if (error.includes("File size too large")) {
     return {
       title: "Fichier trop volumineux",
-      message: "Le fichier sélectionné dépasse la taille maximale autorisée de 10 MB.",
+      message:
+        "Le fichier sélectionné dépasse la taille maximale autorisée de 10 MB.",
       type: "error",
       suggestions: [
         "Vérifiez que vous avez sélectionné le bon fichier",
-        "Les fichiers de configuration sont généralement très petits"
-      ]
+        "Les fichiers de configuration sont généralement très petits",
+      ],
     };
   }
 
   // Version compatibility errors
-  if (error.includes("version must be a valid semantic version") || error.includes("VERSION_INCOMPATIBLE")) {
+  if (
+    error.includes("version must be a valid semantic version") ||
+    error.includes("VERSION_INCOMPATIBLE")
+  ) {
     return {
       title: "Version incompatible",
-      message: "Ce fichier de configuration provient d'une version incompatible de l'application.",
+      message:
+        "Ce fichier de configuration provient d'une version incompatible de l'application.",
       type: "error",
       suggestions: [
         "Utilisez un fichier exporté depuis une version compatible",
         "Mettez à jour l'application si nécessaire",
-        "Créez une nouvelle configuration si le fichier est trop ancien"
-      ]
+        "Créez une nouvelle configuration si le fichier est trop ancien",
+      ],
     };
   }
 
@@ -453,7 +470,7 @@ export function formatValidationError(error: string): FormattedError {
   if (error.includes("Missing required field")) {
     const fieldMatch = error.match(/Missing required field: (\w+)/);
     const fieldName = fieldMatch ? fieldMatch[1] : "inconnu";
-    
+
     return {
       title: "Données manquantes",
       message: `Le fichier de configuration ne contient pas toutes les données requises (champ manquant: ${fieldName}).`,
@@ -461,27 +478,34 @@ export function formatValidationError(error: string): FormattedError {
       suggestions: [
         "Vérifiez que le fichier n'a pas été modifié",
         "Utilisez un fichier exporté récemment",
-        "Créez une nouvelle configuration si nécessaire"
-      ]
+        "Créez une nouvelle configuration si nécessaire",
+      ],
     };
   }
 
   // Invalid numeric values
-  if (error.includes("must be a non-negative number") || error.includes("INVALID_NUMERIC_VALUE")) {
+  if (
+    error.includes("must be a non-negative number") ||
+    error.includes("INVALID_NUMERIC_VALUE")
+  ) {
     return {
       title: "Valeurs numériques invalides",
-      message: "Le fichier contient des valeurs numériques incorrectes ou négatives.",
+      message:
+        "Le fichier contient des valeurs numériques incorrectes ou négatives.",
       type: "error",
       suggestions: [
         "Vérifiez l'intégrité du fichier",
         "Assurez-vous que le fichier n'a pas été modifié manuellement",
-        "Utilisez un fichier exporté directement par l'application"
-      ]
+        "Utilisez un fichier exporté directement par l'application",
+      ],
     };
   }
 
   // Invalid array structure
-  if (error.includes("must be an array") || error.includes("INVALID_ARRAY_STRUCTURE")) {
+  if (
+    error.includes("must be an array") ||
+    error.includes("INVALID_ARRAY_STRUCTURE")
+  ) {
     return {
       title: "Structure de données invalide",
       message: "La structure des données de longueurs de lames est incorrecte.",
@@ -489,8 +513,8 @@ export function formatValidationError(error: string): FormattedError {
       suggestions: [
         "Utilisez uniquement des fichiers exportés par cette application",
         "Vérifiez que le fichier n'a pas été corrompu",
-        "Créez une nouvelle configuration si le problème persiste"
-      ]
+        "Créez une nouvelle configuration si le problème persiste",
+      ],
     };
   }
 
@@ -498,12 +522,13 @@ export function formatValidationError(error: string): FormattedError {
   if (error.includes("roomSize")) {
     return {
       title: "Dimensions de pièce invalides",
-      message: "Les dimensions de la pièce dans le fichier sont incorrectes ou manquantes.",
+      message:
+        "Les dimensions de la pièce dans le fichier sont incorrectes ou manquantes.",
       type: "error",
       suggestions: [
         "Vérifiez que les dimensions sont des nombres positifs",
-        "Assurez-vous que le fichier contient les données de largeur et hauteur"
-      ]
+        "Assurez-vous que le fichier contient les données de largeur et hauteur",
+      ],
     };
   }
 
@@ -516,8 +541,8 @@ export function formatValidationError(error: string): FormattedError {
       suggestions: [
         "Utilisez uniquement des fichiers exportés par cette application",
         "Vérifiez que le fichier n'a pas été modifié",
-        "Contactez le support si le problème persiste"
-      ]
+        "Contactez le support si le problème persiste",
+      ],
     };
   }
 
@@ -529,8 +554,8 @@ export function formatValidationError(error: string): FormattedError {
     suggestions: [
       "Vérifiez le fichier sélectionné",
       "Essayez avec un autre fichier de configuration",
-      "Redémarrez l'application si le problème persiste"
-    ]
+      "Redémarrez l'application si le problème persiste",
+    ],
   };
 }
 

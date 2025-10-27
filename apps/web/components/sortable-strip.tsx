@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { type JSX, type HTMLAttributes } from "react";
-import { type Strip as IStrip } from "../lib/calculator";
+import type { HTMLAttributes, JSX } from "react";
+import type { Strip as IStrip } from "../lib/calculator";
 import Strip from "./strip";
 
 type SortableStripProps = {

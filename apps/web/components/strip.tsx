@@ -1,5 +1,5 @@
 import { type CSSProperties, forwardRef, type HTMLAttributes } from "react";
-import { type Strip } from "../lib/calculator";
+import type { Strip } from "../lib/calculator";
 
 type StripProps = {
   strip: Strip;
@@ -10,7 +10,7 @@ type StripProps = {
 const StripComponent = forwardRef<HTMLDivElement, StripProps>(
   (
     { strip, isOpacityEnabled, isDragging, style, ...props }: StripProps,
-    ref,
+    ref
   ) => {
     const ratio = 3;
     const styles: CSSProperties = {
@@ -36,7 +36,7 @@ const StripComponent = forwardRef<HTMLDivElement, StripProps>(
           : ""}
       </div>
     );
-  },
+  }
 );
 
 StripComponent.displayName = "Strip";

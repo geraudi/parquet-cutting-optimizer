@@ -1,8 +1,4 @@
 {
-    "editor.fontFamily": "Space Mono, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 12,
-    "terminal.integrated.fontSize": 11,
-    "window.zoomLevel": 1,
-    "typescript.preferences.includePackageJsonAutoImports": "off",
-    "typescript.reportStyleChecksAsWarnings": true
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.reportStyleChecksAsWarnings": true
 }

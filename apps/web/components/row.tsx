@@ -1,6 +1,5 @@
 "use client";
 
-import { type HTMLAttributes, type JSX, useId, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -12,18 +11,19 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
 } from "@dnd-kit/sortable";
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
-import { Menu } from "lucide-react";
-import { type Row as IRow, type Strip as IStrip } from "@web/lib/calculator";
-import Strip from "@web/components/strip";
 import SortableStrip from "@web/components/sortable-strip";
+import Strip from "@web/components/strip";
+import type { Row as IRow, Strip as IStrip } from "@web/lib/calculator";
+import { Menu } from "lucide-react";
+import { type HTMLAttributes, type JSX, useId, useState } from "react";
 
 type RowProps = {
   row: IRow;
@@ -57,7 +57,7 @@ export default function Row({ row }: RowProps): JSX.Element {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    })
   );
 
   // triggered when dragging strip starts
