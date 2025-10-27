@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [-] 1. Prepare migration environment
+- [ ] 1. Prepare migration environment
   - Verify clean git working directory and commit any pending changes
   - Check Node.js version compatibility (18+ required)
   - Backup current package.json and next.config.mjs files
