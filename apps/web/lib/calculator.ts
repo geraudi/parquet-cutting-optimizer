@@ -40,7 +40,7 @@ function getRandomStrip(
   min: number,
   max: number,
   strips: Strip[],
-  isFirst: boolean,
+  isFirst: boolean
 ): Strip {
   // cut strip can only be used at the beginning of the line
   // Use the cutStrip to start new row
@@ -76,7 +76,7 @@ function isValidStrip(nextFreeSpace: number): boolean {
 
 function getRoomStripes(
   roomSizes: RoomSize[],
-  strips: Strip[],
+  strips: Strip[]
 ): { rooms: Room[]; restStrips: Strip[] } {
   // Deep clone the strips
   let clonedStrips: Strip[] = JSON.parse(JSON.stringify(strips)) as Strip[];
@@ -169,7 +169,7 @@ function buildStrips(stripsInput: number[]): Strip[] {
 
 export function calculate(
   roomSizes: RoomSize[],
-  stripsInput: number[],
+  stripsInput: number[]
 ): { rooms: Room[]; restStrips: Strip[] } {
   const maxRetry = 20;
   const strips = buildStrips(stripsInput);
@@ -177,7 +177,7 @@ export function calculate(
   for (let retryCount = 0; retryCount < maxRetry; retryCount++) {
     try {
       return getRoomStripes(roomSizes, strips);
-    } catch (e) {
+    } catch (_e) {
       // retry get rooms
     }
   }

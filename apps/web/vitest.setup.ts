@@ -1,60 +1,79 @@
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
+
+// Define proper types for mock events
+interface MockFileReaderEvent {
+  target: {
+    result: string | null;
+  } | null;
+}
+
+interface MockFileWithContent extends File {
+  _content?: string;
+}
 
 // Mock DOM APIs that are not available in jsdom
-Object.defineProperty(window, 'URL', {
+Object.defineProperty(window, "URL", {
   value: {
-    createObjectURL: vi.fn(() => 'mock-url'),
+    createObjectURL: vi.fn(() => "mock-url"),
     revokeObjectURL: vi.fn(),
   },
-})
+});
 
 // Mock FileReader
 global.FileReader = class MockFileReader {
-  result: string | null = null
-  onload: ((event: any) => void) | null = null
-  onerror: ((event: any) => void) | null = null
+  result: string | null = null;
+  onload: ((event: MockFileReaderEvent) => void) | null = null;
+  onerror: ((event: MockFileReaderEvent) => void) | null = null;
 
   readAsText(file: File) {
     // Simulate async file reading
     setTimeout(() => {
-      if (file.name.includes('error-file')) {
-        this.onerror?.({ target: this })
+      if (file.name.includes("error-file")) {
+        this.onerror?.({ target: this });
       } else {
         try {
           // Extract content from the file constructor
-          const content = (file as any)._content || ''
-          this.result = content
-          this.onload?.({ target: { result: content } })
-        } catch (error) {
-          this.onerror?.({ target: this })
+          const content = (file as MockFileWithContent)._content || "";
+          this.result = content;
+          this.onload?.({ target: { result: content } });
+        } catch (_error) {
+          this.onerror?.({ target: this });
         }
       }
-    }, 0)
+    }, 0);
   }
-} as any
+} as unknown as typeof FileReader;
 
 // Enhance File constructor to store content for testing
-const OriginalFile = global.File
+const OriginalFile = global.File;
 global.File = class MockFile extends OriginalFile {
-  _content: string
+  _content: string;
 
-  constructor(fileBits: BlobPart[], fileName: string, options?: FilePropertyBag) {
-    super(fileBits, fileName, options)
-    this._content = fileBits.join('')
+  constructor(
+    fileBits: BlobPart[],
+    fileName: string,
+    options?: FilePropertyBag
+  ) {
+    super(fileBits, fileName, options);
+    this._content = fileBits.join("");
   }
-} as any
+} as unknown as typeof File;
 
 // Mock Blob with text method
 global.Blob = class MockBlob {
-  content: string
-  type: string
+  content: string;
+  type: string;
 
-  constructor(content: any[], options: { type?: string } = {}) {
-    this.content = content.join('')
-    this.type = options.type || ''
+  constructor(
+    content: (string | ArrayBuffer | ArrayBufferView)[],
+    options: { type?: string } = {}
+  ) {
+    this.content = content.join("");
+    this.type = options.type || "";
   }
 
   async text() {
-    return this.content
+    return this.content;
   }
-} as any
+} as unknown as typeof Blob;
