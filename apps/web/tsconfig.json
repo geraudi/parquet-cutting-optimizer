@@ -10,7 +10,9 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    // Optimized for Next.js 16 and React 19 compatibility
+    "noEmitOnError": true
   },
   "include": [
     "next-env.d.ts",
