@@ -1,0 +1,49 @@
+{
+  "editor": {
+    "formatOnSave": true,
+    "formatOnPaste": true,
+    "showInlineErrors": true,
+    "showInlineWarnings": true,
+    "codeActions": {
+      "source.organizeImports": true,
+      "source.fixAll": true
+    }
+  },
+  "formatter": {
+    "defaultFormatter": "biome",
+    "providers": {
+      "biome": {
+        "command": "npx biome format --write",
+        "args": ["--stdin-file-path", "{file}"],
+        "rootMarkers": ["biome.json", "package.json"],
+        "filetypes": ["javascript", "typescript", "jsx", "tsx", "json", "jsonc"]
+      }
+    }
+  },
+  "linter": {
+    "defaultLinter": "biome",
+    "providers": {
+      "biome": {
+        "command": "npx biome check",
+        "args": ["--reporter=json", "--stdin-file-path", "{file}"],
+        "rootMarkers": ["biome.json", "package.json"],
+        "filetypes": [
+          "javascript",
+          "typescript",
+          "jsx",
+          "tsx",
+          "json",
+          "jsonc"
+        ],
+        "parseOutput": "biome-json"
+      }
+    }
+  },
+  "diagnostics": {
+    "enableInlineErrors": true,
+    "enableInlineWarnings": true,
+    "enableInlineInfo": true,
+    "updateOnSave": true,
+    "updateOnType": false
+  }
+}

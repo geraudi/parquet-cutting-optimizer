@@ -1,0 +1,38 @@
+{
+  "javascript": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  },
+  "typescript": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  },
+  "javascriptreact": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  },
+  "typescriptreact": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  },
+  "json": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  },
+  "jsonc": {
+    "formatter": "biome",
+    "linter": "biome",
+    "formatOnSave": true,
+    "lintOnSave": true
+  }
+}

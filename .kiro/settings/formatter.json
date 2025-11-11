@@ -1,0 +1,20 @@
+{
+  "formatter": {
+    "provider": "biome",
+    "command": "npx biome format --write",
+    "formatOnSave": true,
+    "formatOnPaste": true
+  },
+  "linter": {
+    "provider": "biome",
+    "command": "npx biome check",
+    "lintOnSave": true,
+    "showInlineWarnings": true,
+    "showInlineErrors": true
+  },
+  "biome": {
+    "configFile": "biome.json",
+    "enableQuickFix": true,
+    "enableCodeActions": true
+  }
+}

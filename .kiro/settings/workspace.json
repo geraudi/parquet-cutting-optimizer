@@ -1,0 +1,34 @@
+{
+  "name": "Parquet Layout Optimizer",
+  "formatter": {
+    "provider": "biome",
+    "configPath": "./biome.json"
+  },
+  "linter": {
+    "provider": "biome",
+    "configPath": "./biome.json"
+  },
+  "tasks": {
+    "format": {
+      "command": "pnpm format",
+      "description": "Format code with Biome"
+    },
+    "lint": {
+      "command": "pnpm lint",
+      "description": "Lint code with Biome"
+    },
+    "lint:fix": {
+      "command": "npx biome check --write .",
+      "description": "Lint and auto-fix issues with Biome"
+    }
+  },
+  "diagnostics": {
+    "sources": ["biome"],
+    "severity": {
+      "error": true,
+      "warning": true,
+      "info": true,
+      "hint": true
+    }
+  }
+}
