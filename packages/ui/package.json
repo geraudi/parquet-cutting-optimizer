@@ -29,12 +29,8 @@
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.2",
     "@workspace/typescript-config": "workspace:*",
-<<<<<<< HEAD
-    "tailwindcss": "^4.1.14",
-=======
     "eslint": "^9.39.1",
     "tailwindcss": "^4.1.17",
->>>>>>> bed5380 (chore(deps): Update project dependencies to latest versions)
     "typescript": "^5.9.3"
   },
   "exports": {
