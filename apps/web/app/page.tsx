@@ -118,7 +118,7 @@ export default function Page(): JSX.Element {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="room-width"
-                className="text-sm font-medium min-w-[240px]"
+                className="text-sm font-medium min-w-60"
               >
                 Longueur (sens des lames) en cm
               </label>
@@ -133,7 +133,7 @@ export default function Page(): JSX.Element {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="room-height"
-                className="text-sm font-medium min-w-[240px]"
+                className="text-sm font-medium min-w-60"
               >
                 Largeur en cm
               </label>
@@ -169,7 +169,7 @@ export default function Page(): JSX.Element {
           <div className="flex items-center justify-between">
             <label
               htmlFor="strips-width"
-              className="text-sm font-medium min-w-[240px]"
+              className="text-sm font-medium min-w-60"
             >
               Largeur des lames en cm
             </label>
