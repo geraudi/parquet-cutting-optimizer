@@ -18,9 +18,10 @@
     "@workspace/typescript-config": "workspace:*",
     "prettier": "^3.6.2",
     "turbo": "^2.6.1",
+    "lefthook": "^2.0.13",
     "typescript": "5.9.3"
   },
-  "packageManager": "pnpm@10.18.2",
+  "packageManager": "pnpm@10.26.2",
   "engines": {
     "node": ">=20"
   },

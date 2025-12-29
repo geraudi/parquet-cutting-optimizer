@@ -18,12 +18,15 @@ importers:
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:packages/typescript-config
+      lefthook:
+        specifier: ^2.0.13
+        version: 2.0.13
       prettier:
         specifier: ^3.6.2
         version: 3.7.4
       turbo:
         specifier: ^2.6.1
-        version: 2.6.1
+        version: 2.7.2
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2626,6 +2629,60 @@ packages:
     resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
     engines: {node: '>=0.10'}
 
+  lefthook-darwin-arm64@2.0.13:
+    resolution: {integrity: sha512-KbQqpNSNTugjtPzt97CNcy/XZy5asJ0+uSLoHc4ML8UCJdsXKYJGozJHNwAd0Xfci/rQlj82A7rPOuTdh0jY0Q==}
+    cpu: [arm64]
+    os: [darwin]
+
+  lefthook-darwin-x64@2.0.13:
+    resolution: {integrity: sha512-s/vI6sEE8/+rE6CONZzs59LxyuSc/KdU+/3adkNx+Q13R1+p/AvQNeszg3LAHzXmF3NqlxYf8jbj/z5vBzEpRw==}
+    cpu: [x64]
+    os: [darwin]
+
+  lefthook-freebsd-arm64@2.0.13:
+    resolution: {integrity: sha512-iQeJTU7Zl8EJlCMQxNZQpJFAQ9xl40pydUIv5SYnbJ4nqIr9ONuvrioNv6N2LtKP5aBl1nIWQQ9vMjgVyb3k+A==}
+    cpu: [arm64]
+    os: [freebsd]
+
+  lefthook-freebsd-x64@2.0.13:
+    resolution: {integrity: sha512-99cAXKRIzpq/u3obUXbOQJCHP+0ZkJbN3TF+1ZQZlRo3Y6+mPSCg9fh/oi6dgbtu4gTI5Ifz3o5p2KZzAIF9ZQ==}
+    cpu: [x64]
+    os: [freebsd]
+
+  lefthook-linux-arm64@2.0.13:
+    resolution: {integrity: sha512-RWarenY3kLy/DT4/8dY2bwDlYwlELRq9MIFq+FiMYmoBHES3ckWcLX2JMMlM49Y672paQc7MbneSrNUn/FQWhg==}
+    cpu: [arm64]
+    os: [linux]
+
+  lefthook-linux-x64@2.0.13:
+    resolution: {integrity: sha512-QZRcxXGf8Uj/75ITBqoBh0zWhJE7+uFoRxEHwBq0Qjv55Q4KcFm7FBN/IFQCSd14reY5pmY3kDaWVVy60cAGJA==}
+    cpu: [x64]
+    os: [linux]
+
+  lefthook-openbsd-arm64@2.0.13:
+    resolution: {integrity: sha512-LAuOWwnNmOlRE0RxKMOhIz5Kr9tXi0rCjzXtDARW9lvfAV6Br2wP+47q0rqQ8m/nVwBYoxfJ/RDunLbb86O1nA==}
+    cpu: [arm64]
+    os: [openbsd]
+
+  lefthook-openbsd-x64@2.0.13:
+    resolution: {integrity: sha512-n9TIN3QLncyxOHomiKKwzDFHKOCm5H28CVNAZFouKqDwEaUGCs5TJI88V85j4/CgmLVUU8uUn4ClVCxIWYG59w==}
+    cpu: [x64]
+    os: [openbsd]
+
+  lefthook-windows-arm64@2.0.13:
+    resolution: {integrity: sha512-sdSC4F9Di7y0t43Of9MOA5g/0CmvkM4juQ3sKfUhRcoygetLJn4PR2/pvuDOIaGf4mNMXBP5IrcKaeDON9HrcA==}
+    cpu: [arm64]
+    os: [win32]
+
+  lefthook-windows-x64@2.0.13:
+    resolution: {integrity: sha512-ccl1v7Fl10qYoghEtjXN+JC1x/y/zLM/NSHf3NFGeKEGBNd1P5d/j6w8zVmhfzi+ekS8whXrcNbRAkLdAqUrSw==}
+    cpu: [x64]
+    os: [win32]
+
+  lefthook@2.0.13:
+    resolution: {integrity: sha512-D39rCVl7/GpqakvhQvqz07SBpzUWTvWjXKnBZyIy8O6D+Lf9xD6tnbHtG5nWXd9iPvv1AKGQwL9R/e5rNtV6SQ==}
+    hasBin: true
+
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -2837,6 +2894,7 @@ packages:
   next@16.0.1:
     resolution: {integrity: sha512-e9RLSssZwd35p7/vOa+hoDFggUZIUbZhIUSLZuETCwrCVvxOs87NamoUzT+vbcNAL8Ld9GobBnWOA6SbV/arOw==}
     engines: {node: '>=20.9.0'}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -3427,12 +3485,6 @@ packages:
     resolution: {integrity: sha512-bLVMLPtstlZ4iMQHpFHTR7GAGj2jxi8Dg0s2h2MafAE4uSWF98FC/3MomU51iQAMf8/qDUbKWf5GxuvvVcXEhw==}
     engines: {node: '>=20'}
 
-  ts-api-utils@2.1.0:
-    resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
-    engines: {node: '>=18.12'}
-    peerDependencies:
-      typescript: '>=4.8.4'
-
   ts-api-utils@2.2.0:
     resolution: {integrity: sha512-L6f5oQRAoLU1RwXz0Ab9mxsE7LtxeVB6AIR1lpkZMsOyg/JXeaxBaXa/FVCBZyNr9S9I4wkHrlZTklX+im+WMw==}
     engines: {node: '>=18.12'}
@@ -3462,19 +3514,9 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  turbo-darwin-64@2.6.1:
-    resolution: {integrity: sha512-Dm0HwhyZF4J0uLqkhUyCVJvKM9Rw7M03v3J9A7drHDQW0qAbIGBrUijQ8g4Q9Cciw/BXRRd8Uzkc3oue+qn+ZQ==}
-    cpu: [x64]
-    os: [darwin]
-
   turbo-darwin-64@2.7.2:
     resolution: {integrity: sha512-dxY3X6ezcT5vm3coK6VGixbrhplbQMwgNsCsvZamS/+/6JiebqW9DKt4NwpgYXhDY2HdH00I7FWs3wkVuan4rA==}
     cpu: [x64]
-    os: [darwin]
-
-  turbo-darwin-arm64@2.6.1:
-    resolution: {integrity: sha512-U0PIPTPyxdLsrC3jN7jaJUwgzX5sVUBsKLO7+6AL+OASaa1NbT1pPdiZoTkblBAALLP76FM0LlnsVQOnmjYhyw==}
-    cpu: [arm64]
     os: [darwin]
 
   turbo-darwin-arm64@2.7.2:
@@ -3482,19 +3524,9 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.6.1:
-    resolution: {integrity: sha512-eM1uLWgzv89bxlK29qwQEr9xYWBhmO/EGiH22UGfq+uXr+QW1OvNKKMogSN65Ry8lElMH4LZh0aX2DEc7eC0Mw==}
-    cpu: [x64]
-    os: [linux]
-
   turbo-linux-64@2.7.2:
     resolution: {integrity: sha512-kP+TiiMaiPugbRlv57VGLfcjFNsFbo8H64wMBCPV2270Or2TpDCBULMzZrvEsvWFjT3pBFvToYbdp8/Kw0jAQg==}
     cpu: [x64]
-    os: [linux]
-
-  turbo-linux-arm64@2.6.1:
-    resolution: {integrity: sha512-MFFh7AxAQAycXKuZDrbeutfWM5Ep0CEZ9u7zs4Hn2FvOViTCzIfEhmuJou3/a5+q5VX1zTxQrKGy+4Lf5cdpsA==}
-    cpu: [arm64]
     os: [linux]
 
   turbo-linux-arm64@2.7.2:
@@ -3502,29 +3534,15 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.6.1:
-    resolution: {integrity: sha512-buq7/VAN7KOjMYi4tSZT5m+jpqyhbRU2EUTTvp6V0Ii8dAkY2tAAjQN1q5q2ByflYWKecbQNTqxmVploE0LVwQ==}
-    cpu: [x64]
-    os: [win32]
-
   turbo-windows-64@2.7.2:
     resolution: {integrity: sha512-rPjqQXVnI6A6oxgzNEE8DNb6Vdj2Wwyhfv3oDc+YM3U9P7CAcBIlKv/868mKl4vsBtz4ouWpTQNXG8vljgJO+w==}
     cpu: [x64]
-    os: [win32]
-
-  turbo-windows-arm64@2.6.1:
-    resolution: {integrity: sha512-7w+AD5vJp3R+FB0YOj1YJcNcOOvBior7bcHTodqp90S3x3bLgpr7tE6xOea1e8JkP7GK6ciKVUpQvV7psiwU5Q==}
-    cpu: [arm64]
     os: [win32]
 
   turbo-windows-arm64@2.7.2:
     resolution: {integrity: sha512-tcnHvBhO515OheIFWdxA+qUvZzNqqcHbLVFc1+n+TJ1rrp8prYicQtbtmsiKgMvr/54jb9jOabU62URAobnB7g==}
     cpu: [arm64]
     os: [win32]
-
-  turbo@2.6.1:
-    resolution: {integrity: sha512-qBwXXuDT3rA53kbNafGbT5r++BrhRgx3sAo0cHoDAeG9g1ItTmUMgltz3Hy7Hazy1ODqNpR+C7QwqL6DYB52yA==}
-    hasBin: true
 
   turbo@2.7.2:
     resolution: {integrity: sha512-5JIA5aYBAJSAhrhbyag1ZuMSgUZnHtI+Sq3H8D3an4fL8PeF+L1yYvbEJg47akP1PFfATMf5ehkqFnxfkmuwZQ==}
@@ -3705,6 +3723,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -4737,7 +4756,7 @@ snapshots:
       graphemer: 1.4.0
       ignore: 7.0.5
       natural-compare: 1.4.0
-      ts-api-utils: 2.1.0(typescript@5.9.3)
+      ts-api-utils: 2.2.0(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -4779,7 +4798,7 @@ snapshots:
       '@typescript-eslint/utils': 8.46.4(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
       debug: 4.4.3
       eslint: 9.39.1(jiti@2.6.1)
-      ts-api-utils: 2.1.0(typescript@5.9.3)
+      ts-api-utils: 2.2.0(typescript@5.9.3)
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
@@ -6291,6 +6310,49 @@ snapshots:
     dependencies:
       language-subtag-registry: 0.3.23
 
+  lefthook-darwin-arm64@2.0.13:
+    optional: true
+
+  lefthook-darwin-x64@2.0.13:
+    optional: true
+
+  lefthook-freebsd-arm64@2.0.13:
+    optional: true
+
+  lefthook-freebsd-x64@2.0.13:
+    optional: true
+
+  lefthook-linux-arm64@2.0.13:
+    optional: true
+
+  lefthook-linux-x64@2.0.13:
+    optional: true
+
+  lefthook-openbsd-arm64@2.0.13:
+    optional: true
+
+  lefthook-openbsd-x64@2.0.13:
+    optional: true
+
+  lefthook-windows-arm64@2.0.13:
+    optional: true
+
+  lefthook-windows-x64@2.0.13:
+    optional: true
+
+  lefthook@2.0.13:
+    optionalDependencies:
+      lefthook-darwin-arm64: 2.0.13
+      lefthook-darwin-x64: 2.0.13
+      lefthook-freebsd-arm64: 2.0.13
+      lefthook-freebsd-x64: 2.0.13
+      lefthook-linux-arm64: 2.0.13
+      lefthook-linux-x64: 2.0.13
+      lefthook-openbsd-arm64: 2.0.13
+      lefthook-openbsd-x64: 2.0.13
+      lefthook-windows-arm64: 2.0.13
+      lefthook-windows-x64: 2.0.13
+
   levn@0.4.1:
     dependencies:
       prelude-ls: 1.2.1
@@ -7168,10 +7230,6 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  ts-api-utils@2.1.0(typescript@5.9.3):
-    dependencies:
-      typescript: 5.9.3
-
   ts-api-utils@2.2.0(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
@@ -7205,50 +7263,23 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  turbo-darwin-64@2.6.1:
-    optional: true
-
   turbo-darwin-64@2.7.2:
-    optional: true
-
-  turbo-darwin-arm64@2.6.1:
     optional: true
 
   turbo-darwin-arm64@2.7.2:
     optional: true
 
-  turbo-linux-64@2.6.1:
-    optional: true
-
   turbo-linux-64@2.7.2:
-    optional: true
-
-  turbo-linux-arm64@2.6.1:
     optional: true
 
   turbo-linux-arm64@2.7.2:
     optional: true
 
-  turbo-windows-64@2.6.1:
-    optional: true
-
   turbo-windows-64@2.7.2:
-    optional: true
-
-  turbo-windows-arm64@2.6.1:
     optional: true
 
   turbo-windows-arm64@2.7.2:
     optional: true
-
-  turbo@2.6.1:
-    optionalDependencies:
-      turbo-darwin-64: 2.6.1
-      turbo-darwin-arm64: 2.6.1
-      turbo-linux-64: 2.6.1
-      turbo-linux-arm64: 2.6.1
-      turbo-windows-64: 2.6.1
-      turbo-windows-arm64: 2.6.1
 
   turbo@2.7.2:
     optionalDependencies:

@@ -3,18 +3,18 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useStripStore } from "../strip-store";
 
 // Mock DOM APIs
-const mockCreateObjectURL = vi.fn(() => "mock-url");
-const mockRevokeObjectURL = vi.fn();
 const mockClick = vi.fn();
 const mockAppendChild = vi.fn();
 const mockRemoveChild = vi.fn();
 
-Object.defineProperty(window, "URL", {
-  value: {
-    createObjectURL: mockCreateObjectURL,
-    revokeObjectURL: mockRevokeObjectURL,
-  },
-});
+const mockCreateObjectURL = vi.fn(() => "mock-url");
+vi.spyOn(globalThis.URL, "createObjectURL").mockImplementation(
+  mockCreateObjectURL
+);
+const mockRevokeObjectURL = vi.fn();
+vi.spyOn(globalThis.URL, "revokeObjectURL").mockImplementation(
+  mockRevokeObjectURL
+);
 
 Object.defineProperty(document, "createElement", {
   value: vi.fn(() => ({
