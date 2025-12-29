@@ -64,7 +64,7 @@ brew install act
 The main CI workflow (`.github/workflows/ci.yml`) includes:
 
 - **Triggers**: Push to `main`/`develop`, PRs to `main`/`develop`
-- **Environment**: Ubuntu Latest, Node.js 20.x, pnpm 10.18.2
+- **Environment**: Ubuntu Latest, Node.js 20.x, pnpm 10.26.2
 - **Steps**: Lint → Type Check → Test → Build
 - **Caching**: Multi-layer caching for optimal performance
 

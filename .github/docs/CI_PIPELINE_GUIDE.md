@@ -301,7 +301,7 @@ If you encounter issues not covered in this guide:
 The main workflow file is located at `.github/workflows/ci.yml`. Key configuration points:
 
 - **Node.js version**: Currently set to 20.x
-- **pnpm version**: Currently set to 10.18.2
+- **pnpm version**: Currently set to 10.26.2
 - **Trigger branches**: `main` and `develop`
 - **Runner**: `ubuntu-latest`
 
