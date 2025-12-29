@@ -1,5 +1,4 @@
 import "@testing-library/jest-dom";
-import { vi } from "vitest";
 
 // Define proper types for mock events
 interface MockFileReaderEvent {
@@ -11,14 +10,6 @@ interface MockFileReaderEvent {
 interface MockFileWithContent extends File {
   _content?: string;
 }
-
-// Mock DOM APIs that are not available in jsdom
-Object.defineProperty(window, "URL", {
-  value: {
-    createObjectURL: vi.fn(() => "mock-url"),
-    revokeObjectURL: vi.fn(),
-  },
-});
 
 // Mock FileReader
 global.FileReader = class MockFileReader {
