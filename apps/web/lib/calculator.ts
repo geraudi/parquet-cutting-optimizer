@@ -1,3 +1,4 @@
+import Big from "big.js";
 import { v4 as uuidV4 } from "uuid";
 
 export type StripsInput = Record<number, number>;
@@ -29,11 +30,11 @@ const STRIPE_HEIGHT = 13;
 const CUT_SIZE = 0.0; // 1mm
 
 function add(a: number, b: number): number {
-  return Math.round(a * 1000 + b * 1000) / 1000;
+  return new Big(a).plus(b).toNumber();
 }
 
 function sub(a: number, b: number): number {
-  return Math.round(a * 1000 - b * 1000) / 1000;
+  return new Big(a).minus(b).toNumber();
 }
 
 function getRandomStrip(

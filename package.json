@@ -6,9 +6,10 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "check-types": "turbo check-types",
     "test": "turbo test",
-    "format": "biome format --write .",
     "update-pkg": "pnpm update --latest --filter \"*\"",
     "ci:test": "./.github/scripts/test-workflow.sh --local-steps",
     "ci:validate": "./.github/scripts/test-workflow.sh --validate"

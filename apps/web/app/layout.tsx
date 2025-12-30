@@ -37,7 +37,7 @@ export default function RootLayout({
                   height={32}
                 />
                 <span className="hidden font-bold sm:inline-block">
-                  Parquet layout
+                  OptiParquet
                 </span>
               </Link>
             </div>
