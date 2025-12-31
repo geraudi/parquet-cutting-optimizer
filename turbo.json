@@ -10,6 +10,12 @@
     "lint": {
       "inputs": ["$TURBO_DEFAULT$", "biome.json"]
     },
+    "lint:fix": {
+      "inputs": ["$TURBO_DEFAULT$", "biome.json"]
+    },
+    "format": {
+      "inputs": ["$TURBO_DEFAULT$", "biome.json"]
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },

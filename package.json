@@ -5,9 +5,9 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "format": "turbo format",
     "check-types": "turbo check-types",
     "test": "turbo test",
     "update-pkg": "pnpm update --latest --filter \"*\"",
@@ -29,7 +29,9 @@
   "pnpm": {
     "overrides": {
       "@types/react": "19.2.2",
-      "@types/react-dom": "19.2.2"
+      "@types/react-dom": "19.2.2",
+      "tmp": ">=0.2.4",
+      "js-yaml": ">=4.1.1"
     }
   }
 }

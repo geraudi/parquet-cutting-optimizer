@@ -51,6 +51,7 @@ export default function Row({ row }: RowProps): JSX.Element {
     transition: transition ?? undefined,
     opacity: isDragging ? "0.5" : "1",
     cursor: isDragging ? "grabbing" : "grab",
+    filter: isDragging ? "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2))" : "none",
   };
 
   const sensors = useSensors(
@@ -90,15 +91,22 @@ export default function Row({ row }: RowProps): JSX.Element {
   };
 
   return (
-    <div style={styles} ref={setNodeRef} className="flex items-center">
+    <div
+      style={styles}
+      ref={setNodeRef}
+      className="flex items-center group hover:bg-slate-50/50 rounded transition-colors py-1"
+    >
       <div
-        className="w-8 print:hidden"
+        className="w-10 print:hidden flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
         ref={setActivatorNodeRef}
         {...attributes}
         {...listeners}
       >
-        <button type="button">
-          <Menu />
+        <button
+          type="button"
+          className="p-1.5 hover:bg-slate-200 rounded transition-colors text-slate-400 hover:text-slate-700"
+        >
+          <Menu className="w-4 h-4" />
         </button>
       </div>
 
@@ -111,7 +119,7 @@ export default function Row({ row }: RowProps): JSX.Element {
         onDragCancel={handleDragCancel}
         id={id}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-0.5">
           <SortableContext items={strips}>
             {strips.map((strip) => (
               <SortableStrip strip={strip} key={strip.id} />
