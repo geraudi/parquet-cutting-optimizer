@@ -1,20 +1,21 @@
 "use client";
 
+import { Sidebar } from "@web/components/layout/sidebar";
 import RemainingStrips from "@web/components/remaining-strips";
 import RoomView from "@web/components/room-view";
 import { calculate, type Room, type Strip } from "@web/lib/calculator";
 import { useStripStore } from "@web/store/strip-store";
 import { Button } from "@workspace/ui/components/button";
-import Big from "big.js";
-import { ArrowLeft, RotateCcw, Save } from "lucide-react";
-import Link from "next/link";
 import {
-  type ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card";
+import Big from "big.js";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 
 interface SavedVersion {
   date: string;
@@ -33,9 +34,8 @@ export default function Page(): ReactNode {
     restStrips: Strip[];
   } | null>(null);
   const [calcError, setCalcError] = useState<Error | null>(null);
-  const [savedVersions, setSavedVersions] = useState<SavedVersion[]>([]);
-  const isFirstLoad = useRef(true);
   const [latestRooms, setLatestRooms] = useState<Room[]>([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const recalculate = useCallback(() => {
     setCalcKey((k) => k + 1);
@@ -53,49 +53,44 @@ export default function Page(): ReactNode {
     }
   }, [roomSize, stripLengths]);
 
-  // Load saved versions on first render
+  // Listen to custom events to load versions from the toolbar
   useEffect(() => {
-    if (isFirstLoad.current) {
-      const savesRaw = localStorage.getItem("parquet-layout:saves");
-      setSavedVersions(savesRaw ? JSON.parse(savesRaw) : []);
-      isFirstLoad.current = false;
-    }
+    const handleLoadVersion = (e: CustomEvent) => {
+      try {
+        const version = e.detail;
+        setCalcResult(version.calcResult);
+      } catch (error) {
+        console.error("Error loading version:", error);
+      }
+    };
+
+    window.addEventListener(
+      "parquet-layout:load-version",
+      handleLoadVersion as EventListener
+    );
+    return () =>
+      window.removeEventListener(
+        "parquet-layout:load-version",
+        handleLoadVersion as EventListener
+      );
   }, []);
 
-  // Update the list when saving a new version
-  const saveCurrentVersion = useCallback(() => {
-    if (!calcResult) return;
-    try {
-      const savesRaw = localStorage.getItem("parquet-layout:saves");
-      const saves = savesRaw ? JSON.parse(savesRaw) : [];
-      const newSave = {
-        date: new Date().toISOString(),
+  // Callback to load version from toolbar
+  const handleLoadVersion = useCallback((version: SavedVersion) => {
+    setCalcResult(version.calcResult);
+  }, []);
+
+  // Expose current version for toolbar SaveLoadMenu
+  const currentVersion = calcResult
+    ? {
         calcResult: {
           ...calcResult,
           rooms: latestRooms.length > 0 ? latestRooms : calcResult.rooms,
         },
         roomSize,
         stripLengths,
-      };
-      const updated = [newSave, ...saves];
-      localStorage.setItem("parquet-layout:saves", JSON.stringify(updated));
-      setSavedVersions(updated);
-    } catch (e) {
-      console.error("Erreur lors de l'enregistrement", e);
-    }
-  }, [calcResult, roomSize, stripLengths, latestRooms]);
-
-  // Load a saved version
-  const loadVersion = (version: SavedVersion) => {
-    setCalcResult(version.calcResult);
-  };
-
-  // Function to delete a saved version
-  const deleteVersion = (date: string) => {
-    const updated = savedVersions.filter((v) => v.date !== date);
-    setSavedVersions(updated);
-    localStorage.setItem("parquet-layout:saves", JSON.stringify(updated));
-  };
+      }
+    : undefined;
 
   if (calcError) {
     return (
@@ -123,125 +118,128 @@ export default function Page(): ReactNode {
   const { rooms, restStrips } = calcResult;
 
   return (
-    <main className="min-h-screen p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <Button asChild variant="ghost" className="mb-4">
-          <Link href="/" className="flex items-center gap-2">
-            <ArrowLeft className="w-4 h-4" />
-            Retour à la configuration
-          </Link>
-        </Button>
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">
-            Disposition optimale du parquet
-          </h1>
-          <p className="text-muted-foreground">
-            Voici une disposition calculée pour votre pièce
-          </p>
-          <div className="flex justify-center mt-4 gap-2">
-            <Button onClick={recalculate} className="flex items-center gap-2">
-              <RotateCcw className="w-4 h-4" />
-              Recalculer
-            </Button>
-            <Button
-              onClick={saveCurrentVersion}
-              className="flex items-center gap-2"
-              disabled={!calcResult}
-              variant="secondary"
-            >
-              <Save className="w-4 h-4" />
-              Enregistrer cette version
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className="space-y-8">
-        {/* Bloc des versions enregistrées */}
-        {savedVersions.length > 0 && (
-          <div className="p-6 border rounded-lg bg-card shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">
-              Versions enregistrées
-            </h2>
-            <div className="space-y-2">
-              {savedVersions.map((v) => (
-                <div
-                  key={v.date}
-                  className="flex items-center justify-between p-2 border rounded mb-2"
-                >
-                  <div>
-                    <div className="text-sm font-medium">
-                      {new Date(v.date).toLocaleString()}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {v.stripLengths.length} lames,{" "}
-                      {v.calcResult.restStrips.length} chutes
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => loadVersion(v)}
-                    >
-                      Charger
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => deleteVersion(v.date)}
-                    >
-                      Supprimer
-                    </Button>
-                  </div>
+    <>
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        onRecalculate={recalculate}
+      />
+      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
+        {/* Header Bar */}
+        <div className="border-b bg-white/80 backdrop-blur-sm sticky top-16 z-40">
+          <div className="max-w-[1800px] mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button asChild variant="ghost" size="sm">
+                  <Link
+                    href="/configuration"
+                    className="flex items-center gap-2"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Configuration
+                  </Link>
+                </Button>
+                <div className="h-5 w-px bg-border" />
+                <div>
+                  <h1 className="text-lg font-semibold tracking-tight">
+                    Disposition optimale du parquet
+                  </h1>
+                  <p className="text-xs text-muted-foreground">
+                    Ajustez la disposition en glissant les lames
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-        <div className="p-6 border rounded-lg bg-card shadow-sm">
-          <RoomView
-            rooms={rooms}
-            isFullscreen={isFullscreen}
-            setIsFullscreen={setIsFullscreen}
-            onRoomsChange={setLatestRooms}
-          />
-        </div>
-        {!isFullscreen && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-6 border rounded-lg bg-card shadow-sm">
-              <h2 className="text-xl font-semibold mb-4">Lames restantes</h2>
-              <RemainingStrips strips={restStrips} roomSizes={[roomSize]} />
-            </div>
-            <div className="p-6 border rounded-lg bg-card shadow-sm">
-              <h2 className="text-xl font-semibold mb-4">Statistiques</h2>
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">
-                    Superficie de la pièce
-                  </span>
-                  <span className="font-medium">
-                    {Big(roomSize.height)
-                      .mul(roomSize.width)
-                      .div(10000)
-                      .toFixed(2)}{" "}
-                    cm²
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">
-                    Nombre total de lames
-                  </span>
-                  <span className="font-medium">{stripLengths.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Lames restantes</span>
-                  <span className="font-medium">{restStrips.length}</span>
-                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {/* Toolbar moved to RoomView as floating element */}
               </div>
             </div>
           </div>
-        )}
-      </div>
-    </main>
+        </div>
+
+        {/* Main Content */}
+        <div className="max-w-[1800px] mx-auto p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+            {/* Left: Room View */}
+            <div className="space-y-6">
+              <Card className="overflow-hidden border-2 shadow-xl bg-white/95">
+                <RoomView
+                  rooms={rooms}
+                  isFullscreen={isFullscreen}
+                  setIsFullscreen={setIsFullscreen}
+                  onRoomsChange={setLatestRooms}
+                  onOpenSidebar={() => setIsSidebarOpen(true)}
+                  currentVersion={currentVersion}
+                  onLoadVersion={handleLoadVersion}
+                />
+              </Card>
+            </div>
+
+            {/* Right: Stats Sidebar */}
+            {!isFullscreen && (
+              <div className="space-y-6">
+                {/* Statistics Card */}
+                <Card className="border-2 shadow-lg bg-gradient-to-br from-white to-slate-50/50 overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/5 to-transparent rounded-full blur-3xl" />
+                  <CardHeader className="relative">
+                    <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <div className="w-1 h-5 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full" />
+                      Statistiques
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 relative">
+                    <div className="group p-3 rounded-lg bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
+                      <div className="text-xs text-muted-foreground mb-1">
+                        Superficie de la pièce
+                      </div>
+                      <div className="text-2xl font-bold font-mono text-slate-900">
+                        {Big(roomSize.height)
+                          .mul(roomSize.width)
+                          .div(10000)
+                          .toFixed(2)}{" "}
+                        <span className="text-sm text-muted-foreground">
+                          m²
+                        </span>
+                      </div>
+                    </div>
+                    <div className="group p-3 rounded-lg bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
+                      <div className="text-xs text-muted-foreground mb-1">
+                        Nombre total de lames
+                      </div>
+                      <div className="text-2xl font-bold font-mono text-slate-900">
+                        {stripLengths.length}
+                      </div>
+                    </div>
+                    <div className="group p-3 rounded-lg bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
+                      <div className="text-xs text-muted-foreground mb-1">
+                        Lames restantes
+                      </div>
+                      <div className="text-2xl font-bold font-mono text-slate-900">
+                        {restStrips.length}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Remaining Strips Card */}
+                <Card className="border-2 shadow-lg bg-white/95 overflow-hidden">
+                  <CardHeader>
+                    <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <div className="w-1 h-5 bg-gradient-to-b from-amber-600 to-amber-400 rounded-full" />
+                      Lames restantes
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <RemainingStrips
+                      strips={restStrips}
+                      roomSizes={[roomSize]}
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

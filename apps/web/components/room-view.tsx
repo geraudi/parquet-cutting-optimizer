@@ -1,14 +1,27 @@
+import { ParquetToolbar } from "@web/components/parquet-toolbar";
 import Room from "@web/components/room";
-import type { Room as RoomType } from "@web/lib/calculator";
-import { Button } from "@workspace/ui/components/button";
-import { Maximize2, Minimize2 } from "lucide-react";
+import type { Room as RoomType, Strip } from "@web/lib/calculator";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+
+interface SavedVersion {
+  date: string;
+  calcResult: { rooms: RoomType[]; restStrips: Strip[] };
+  roomSize: { width: number; height: number };
+  stripLengths: number[];
+}
 
 interface RoomViewProps {
   rooms: RoomType[];
   isFullscreen: boolean;
   setIsFullscreen: Dispatch<SetStateAction<boolean>>;
   onRoomsChange?: (rooms: RoomType[]) => void;
+  onOpenSidebar?: () => void;
+  currentVersion?: {
+    calcResult: { rooms: RoomType[]; restStrips: Strip[] };
+    roomSize: { width: number; height: number };
+    stripLengths: number[];
+  };
+  onLoadVersion?: (version: SavedVersion) => void;
 }
 
 export default function RoomView({
@@ -16,6 +29,9 @@ export default function RoomView({
   isFullscreen,
   setIsFullscreen,
   onRoomsChange,
+  onOpenSidebar,
+  currentVersion,
+  onLoadVersion,
 }: RoomViewProps) {
   const [localRooms, setLocalRooms] = useState<RoomType[]>(rooms);
 
@@ -35,54 +51,72 @@ export default function RoomView({
     );
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleExportPDF = () => {
+    // TODO: Implement PDF export
+    alert("Export PDF - À implémenter");
+  };
+
   return (
     <div
       className={
         isFullscreen
-          ? "fixed inset-0 z-50 bg-background p-4 overflow-y-auto"
-          : "overflow-x-auto overflow-y-auto"
+          ? "fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 overflow-y-auto"
+          : "overflow-x-auto overflow-y-auto relative"
       }
     >
       {!isFullscreen && (
-        <div className="print:hidden">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-semibold">
-              Vue d&apos;ensemble de la pièce
-            </h2>
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setIsFullscreen(true)}
-            >
-              <Maximize2 className="h-4 w-4" />
-            </Button>
+        <div className="print:hidden p-6 border-b bg-gradient-to-r from-slate-50 to-blue-50/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold tracking-tight flex items-center gap-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full" />
+                Vue d&apos;ensemble de la pièce
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                Glissez les lames pour ajuster la disposition
+              </p>
+            </div>
           </div>
-          <p className="mb-4">
-            Ajustez la disposition des lames de parquet en les déplaçant.
-          </p>
         </div>
       )}
       {isFullscreen && (
-        <div className="print:hidden">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-semibold">
-              Vue d&apos;ensemble de la pièce
-            </h2>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setIsFullscreen(false)}
-            >
-              <Minimize2 className="h-4 w-4" />
-            </Button>
+        <div className="print:hidden mb-6">
+          <div className="flex items-center justify-between p-4 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700">
+            <div>
+              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full" />
+                Vue d&apos;ensemble de la pièce
+              </h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Glissez les lames pour ajuster la disposition
+              </p>
+            </div>
           </div>
-          <p className="mb-4">
-            Ajustez la disposition des lames de parquet en les déplaçant.
-          </p>
         </div>
       )}
-      <div className={isFullscreen ? "h-[calc(100vh-8rem)]" : ""}>
+
+      {/* Floating Toolbar */}
+      <ParquetToolbar
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
+        onPrint={handlePrint}
+        onExportPDF={handleExportPDF}
+        onOpenSidebar={onOpenSidebar}
+        currentVersion={currentVersion}
+        onLoadVersion={onLoadVersion}
+      />
+
+      <div
+        className={
+          isFullscreen
+            ? "h-[calc(100vh-12rem)] p-8 bg-slate-800/30 rounded-lg"
+            : "p-6 bg-gradient-to-br from-slate-50/50 to-transparent"
+        }
+      >
         {localRooms.map((room) => (
           <Room
             room={room}
