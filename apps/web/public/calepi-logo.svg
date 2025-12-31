@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="311.851 36.1011 129.309 136.6979" width="129.309px" height="136.6979px">
+  <defs>
+    <style>
+      .blueprint {
+        stroke: #1A202C;
+        stroke-opacity: 0.35;
+        stroke-width: 1;
+      }
+      .text {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        fill: #1A202C;
+      }
+    </style>
+  </defs>
+  <polygon style="stroke: currentcolor; paint-order: fill; stroke-width: 0px; fill: rgb(229, 164, 67);" points="321.097 44.835 365.708 44.696 394.337 73.881 371.545 96.812 352.645 78.05 320.68 109.598"/>
+  <polygon style="stroke: currentcolor; paint-order: fill; stroke-width: 0px; fill: rgb(229, 164, 67); transform-origin: 395.865px 131.903px 0px;" points="359.036 99.452 404.064 99.452 432.693 128.637 409.901 151.568 391.001 132.806 359.036 164.354" transform="matrix(-1, 0, 0, -1, -0.00001953, -0.00003076)"/>
+  <polygon style="stroke: currentcolor; paint-order: fill; stroke-width: 0px; fill: rgb(26, 32, 44); transform-origin: 353.131px 127.525px 0px;" points="316.302 95.074 365.082 95.074 396.63 126.622 370.919 152.888 344.998 127.197 316.302 155.945" transform="matrix(0, -1, 1, 0, 0.00000281, 0.00000586)"/>
+  <polygon style="stroke: currentcolor; paint-order: fill; stroke-width: 0px; fill: rgb(26, 32, 44); transform-origin: 400.243px 81.525px 0px;" points="363.414 49.074 412.194 49.074 443.742 80.622 418.031 106.888 392.318 81.96 363.414 110.847" transform="matrix(0, 1, -1, 0, 0.00003589, -0.00001758)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke: rgb(160, 160, 160);" x1="315.74" y1="44.696" x2="315.346" y2="108.355"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke: rgb(160, 160, 160); stroke-width: 1px; transform-origin: 437.289px 132.525px 0px;" x1="437.485" y1="100.695" x2="437.092" y2="164.354" transform="matrix(-1, 0, 0, -1, 0.00000293, -0.00004272)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke: rgb(160, 160, 160); stroke-width: 1px; transform-origin: 400.864px 39.973px 0px;" x1="401.061" y1="8.144" x2="400.667" y2="71.803" transform="matrix(0, 1, -1, 0, 0.00000562, 0.00000879)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke: rgb(160, 160, 160); stroke-width: 1px; transform-origin: 352.509px 169.04px 0px;" x1="352.706" y1="137.211" x2="352.312" y2="200.87" transform="matrix(0, -1, 1, 0, 0.00002466, 0.00001123)"/>
+  <line style="fill: none; stroke: rgb(160, 160, 160);" x1="319.594" y1="44.783" x2="311.851" y2="44.696"/>
+  <line style="fill: none; stroke: rgb(160, 160, 160); stroke-width: 1px;" x1="441.16" y1="163.912" x2="433.417" y2="163.825"/>
+  <line style="fill: none; stroke: rgb(160, 160, 160); stroke-width: 1px; transform-origin: 320.636px 168.928px 0px;" x1="324.508" y1="168.972" x2="316.765" y2="168.885" transform="matrix(0, -1, 1, 0, -0.00000745, -0.00003516)"/>
+  <line style="fill: none; stroke: rgb(160, 160, 160); stroke-width: 1px; transform-origin: 432.65px 39.972px 0px;" x1="436.522" y1="40.015" x2="428.779" y2="39.928" transform="matrix(0, 1, -1, 0, -0.00002124, 0.000052)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke-width: 1px; stroke: rgb(255, 255, 255); transform-origin: 400.61px 81.787px 0px;" x1="400.743" y1="60.075" x2="400.475" y2="103.498" transform="matrix(-1, 0, 0, -1, -0.0000293, 0.00002039)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke-width: 1px; stroke: rgb(255, 255, 255); transform-origin: 351.98px 127.654px 0px;" x1="352.113" y1="105.942" x2="351.845" y2="149.365" transform="matrix(-1, 0, 0, -1, 0.00002197, 0.00001392)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke-width: 1px; stroke: rgb(255, 255, 255); transform-origin: 363.08px 77.325px 0px;" x1="363.213" y1="55.613" x2="362.945" y2="99.036" transform="matrix(0, -1, 1, 0, 0.00000488, -0.00003174)"/>
+  <line style="fill: none; stroke-dasharray: 4px; stroke-width: 1px; stroke: rgb(255, 255, 255); transform-origin: 390.399px 132.131px 0px;" x1="390.532" y1="110.419" x2="390.264" y2="153.842" transform="matrix(0, -1, 1, 0, 0.00000537, -0.00003174)"/>
+</svg>

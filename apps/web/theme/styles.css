@@ -1,13 +1,13 @@
 :root {
   /* Warm Wood & Technical Slate Theme */
   --background: oklch(0.98 0.01 30); /* Off-white, paper-like */
-  --foreground: oklch(0.20 0.02 220); /* Dark slate text */
+  --foreground: #1A202C; /* Dark slate text */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.20 0.02 220);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.20 0.02 220);
   /* Primary: Elegant Wood Tone */
-  --primary: oklch(0.50 0.12 60); /* Warm wood brown */
+  --primary: #E5A443; /* Warm wood brown */
   --primary-foreground: oklch(0.98 0.01 30);
   --secondary: oklch(0.90 0.01 220); /* Technical slate */
   --secondary-foreground: oklch(0.20 0.02 220);
