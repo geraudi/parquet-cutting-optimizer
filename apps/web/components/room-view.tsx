@@ -64,16 +64,16 @@ export default function RoomView({
     <div
       className={
         isFullscreen
-          ? "fixed inset-0 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 overflow-y-auto"
+          ? "fixed inset-0 z-50 bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 p-6 overflow-y-auto"
           : "overflow-x-auto overflow-y-auto relative"
       }
     >
       {!isFullscreen && (
-        <div className="print:hidden p-6 border-b bg-gradient-to-r from-slate-50 to-blue-50/30">
+        <div className="print:hidden p-6 border-b bg-linear-to-r from-slate-50 to-blue-50/30">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-semibold tracking-tight flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full" />
+                <div className="w-1 h-6 bg-linear-to-b from-blue-600 to-blue-400 rounded-full" />
                 Vue d&apos;ensemble de la pièce
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
@@ -88,7 +88,7 @@ export default function RoomView({
           <div className="flex items-center justify-between p-4 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700">
             <div>
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full" />
+                <div className="w-1 h-6 bg-linear-to-b from-blue-400 to-blue-600 rounded-full" />
                 Vue d&apos;ensemble de la pièce
               </h2>
               <p className="text-xs text-slate-400 mt-1">
@@ -114,7 +114,7 @@ export default function RoomView({
         className={
           isFullscreen
             ? "h-[calc(100vh-12rem)] p-8 bg-slate-800/30 rounded-lg"
-            : "p-6 bg-gradient-to-br from-slate-50/50 to-transparent"
+            : "p-6 bg-linear-to-br from-slate-50/50 to-transparent"
         }
       >
         {localRooms.map((room) => (

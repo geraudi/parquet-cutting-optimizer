@@ -57,8 +57,8 @@ export function ParquetToolbar({
   onLoadVersion,
 }: ParquetToolbarProps) {
   const toolbarClasses = isFullscreen
-    ? "absolute top-4 right-4 z-30 flex items-center gap-2 bg-slate-800/95 backdrop-blur-md border-2 border-slate-600/80 rounded-xl shadow-2xl p-2 transition-all duration-300 hover:shadow-3xl"
-    : "absolute top-4 right-4 z-30 flex items-center gap-2 bg-white/95 backdrop-blur-md border-2 border-slate-200/80 rounded-xl shadow-2xl p-2 transition-all duration-300 hover:shadow-3xl";
+    ? "absolute top-4 right-4 z-30 flex items-center gap-2 bg-slate-800/95 backdrop-blur-md border-2 border-slate-600/80 rounded-xl shadow-md p-2 transition-all duration-300 hover:shadow-2xl"
+    : "absolute top-4 right-4 z-30 flex items-center gap-2 bg-white/95 backdrop-blur-md border-2 border-slate-200/80 rounded-xl shadow-md p-2 transition-all duration-300 hover:shadow-2xl";
 
   const buttonClasses = isFullscreen
     ? "h-9 w-9 hover:bg-slate-700 text-slate-100 hover:text-white transition-all duration-200"
